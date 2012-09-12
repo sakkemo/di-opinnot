@@ -61,16 +61,3 @@ Tieteen metodiikka			10 op
 Diplomityö D				30 op
 ---------------------------------------------
 
-# Vanhat:
-# T-61.6050 Special Course in Computer and Information Science V P	6 op
-# Mat-2.4129 Systeemien identifiointi L					5 op
-# T-61.5020 Computational genomics (I)					5 op
-# Becs-114.2510 Computational Systems Biology (II)			5 op
-# S-114.2601 Bayesilaisen mallintamisen perusteet L			5 op
-# T-61.5100 Digitaalinen kuvankäsittely P					5 op
-# AS-0.3301 C++ Programming						4 op
-# T-61.5110 Modeling Biological Networks P (II)				5 op
-# Mat-2.4129 Systeemien identifiointi L					5 op
-# T-61.5130 Machine Learning and Neural Networks P (II)			5 op
-# T-61.3040 Statistical Signal Modeling					5 op
-# Mat-2.4129 Systeemien identifiointi L					5 op
