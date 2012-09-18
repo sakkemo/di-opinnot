@@ -19,7 +19,7 @@ fields = fieldnames(freq_init);
 for i=1:4
     initial_distribution(i)=getfield(freq_init,fields{i});
 end
-initial_distribution/sum(initial_distribution);
+initial_distribution = initial_distribution/sum(initial_distribution);
 
 
 transition_probabilities = zeros(4);
