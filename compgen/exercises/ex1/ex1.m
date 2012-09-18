@@ -44,24 +44,18 @@ transition_probabilities=transition_probabilities';
 % AA
 % AC
 % AG
-% AT
+% AT etc.
 for i=1:16
-    transition_probabilities(i,:) = transition_probabilities(i,:)/sum(transition_probabilities(i,:));
+    transition_probabilities(i,:) = transition_probabilities(i,:)/...
+    sum(transition_probabilities(i,:));
 end
 
 seq_numeric = nt2int('gatacc');
 probability = initial_distribution((seq_numeric(1)-1)*4+seq_numeric(2));
 for i=3:length(seq_numeric)
-    probability = probability*transition_probabilities((seq_numeric(i-2)-1)*4+seq_numeric(i-1),seq_numeric(i));
+    probability = probability*transition_probabilities((seq_numeric(i-2)-1)*4...
+    +seq_numeric(i-1),seq_numeric(i));
 end
 logprob = log(probability);
 
-% for j=1:16
-% seq_numeric = nt2int(char(fields_t(j)));
-% probability = initial_distribution((seq_numeric(1)-1)*4+seq_numeric(2));
-% for i=3:length(seq_numeric)
-%     probability = probability*transition_probabilities((seq_numeric(i-2)-1)*4+seq_numeric(i-1),seq_numeric(i));
-% end
-% logprob = log(probability);
-% fprintf('%d %f\n', getfield(freq_trans,fields_t{j}), logprob)
-% end
+relfreq = seqwordcount(HC22, 'gatacc')/(length(HC22)-5)
