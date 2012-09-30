@@ -67,7 +67,7 @@ for i=1:length(ali1)
         score = score + scm(aa2int(ali1(i)),aa2int(ali2(i)));
     end
 end
-score=score/2;
+score=score;
 
 alignment(1,1:length(ali1))=ali1;
 alignment(2,1:length(ali2))=ali2;

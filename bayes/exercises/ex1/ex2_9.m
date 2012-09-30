@@ -17,8 +17,8 @@
 % of the Beta distribution are discussed on pages 576-577, 581-582.  
 mu = 0.6;
 sigma = 0.3; 
-alfa = 
-beta = 
+alfa = ((1-mu)/sigma^2-1/mu)*mu^2;
+beta = alfa*(1/mu-1);
 
 % Then create a vector of theta values and evaluate the 
 % probability density on those values of theta
@@ -49,10 +49,11 @@ ylabel('prior probability p(\theta)')
 % The data
 n = 1000;
 y = 650;
-alfa_post = 
-beta_post = 
-mean_post =       % the posterior mean
-sigma_post =       % the posterior mean
+alfa_post = alfa + y;
+beta_post = beta + n -y;
+mean_post = alfa_post/(alfa_post+beta_post);      % the posterior mean
+sigma_post = alfa_post*beta_post/((alfa_post+beta_post)^2 ...
+*(alfa_post+beta_post+1));       % the posterior mean
 
 % Plot the answer
 p_posterior = betapdf(theta, alfa_post, beta_post);
@@ -84,8 +85,8 @@ help betacdf
 % First we create a figure object and set some parameters for it.
 figure(1)
 set(gcf,'units','centimeters');
-set(gcf,'DefaultAxesFontSize',8)
-set(gcf,'DefaultTextFontSize',8)
+set(gcf,'DefaultAxesFontSize',6)
+set(gcf,'DefaultTextFontSize',6)
 set(gcf,'DefaultLineLineWidth',2)
 
 % here we plot the figure and set the title and axes labels
@@ -95,18 +96,19 @@ xlabel('\theta')
 ylabel('prior probability p(\theta)')
 
 % Finally we set the size of the figure and print it as a postscript
-set(gcf,'pos',[13.6    10   6  6])   % this line sets the figure in size of 6cm x 6cm
+%set(gcf,'pos',[13.6    10   6  6])   % this line sets the figure in size of 6cm x 6cm
 set(gcf,'paperunits',get(gcf,'units')) 
-set(gcf,'paperpos',get(gcf,'pos')) % this line sets the borders of the figure in size of 6cm x 6cm
-print -depsc2 fig_ex29prior  % this line prints the figure in the current 
+set(gcf,'paperpos',[0 0 6 6]) % this line sets the borders of the figure in size of 6cm x 6cm
+set(gcf,'papersize',[6 6])
+print -dpdf fig_ex29prior  % this line prints the figure in the current 
                         % Matlab working directory with name fig_ex29.eps
 
 
 % The posterior figure
 figure(2)
 set(gcf,'units','centimeters');
-set(gcf,'DefaultAxesFontSize',8)
-set(gcf,'DefaultTextFontSize',8)
+set(gcf,'DefaultAxesFontSize',6)
+set(gcf,'DefaultTextFontSize',6)
 set(gcf,'DefaultLineLineWidth',2)
 
 plot(theta, [p_prior ; p_posterior])
@@ -115,30 +117,165 @@ xlabel('\theta')
 ylabel('prior probability p(\theta)')
 l1 = legend('prior', 'posterior');
 
-set(gcf,'pos',[13.6    10   6  6])       % this line sets the figure in size of 6cm x 6cm
 set(gcf,'paperunits',get(gcf,'units')) 
-set(gcf,'paperpos',get(gcf,'pos'))       % this line sets the borders of the figure in size of 6cm x 6cm
-set(l1,'Position', [0.21 0.75 0.4 0.1])  % this line sets the legend on right position
-print -depsc2 fig_ex29posterior          % this line prints the figure
+set(gcf,'paperpos',[0 0 6 6]) % this line sets the borders of the figure in size of 6cm x 6cm
+set(gcf,'papersize',[6 6])
 
-% In order to add the figure in the report copy the fig_ex29.eps in unix 
-% directory and run a commands 'epstopdf fig_ex29prior.eps' and 
-% 'epstopdf fig_ex29posterior.eps'. Then add the following lines in your
-% latex code
-% 
-%\begin{figure}
-%  \begin{center}
-%    \subfigure[Add here a subfigure caption]{
-%      \label{fig_29prior}
-%      \includegraphics[]{fig_ex29prior}
-%    }
-%    ~
-%    \subfigure[Add here a subfigure caption]{
-%      \label{fig_29posterior}
-%      \includegraphics[]{fig_ex29posterior}
-%    }
-%    \caption{Add here a caption text}\label{fig_29}
-% \end{center}
-%\end{figure}
-%
-% and run 'pdflatex name_of_your_report'
+set(l1,'Position', [0.4 0.74 0.07 0.1])  % this line sets the legend on right position
+print -dpdf fig_ex29posterior          % this line prints the figure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+figure(1)
+set(gcf,'units','centimeters');
+set(gcf,'DefaultAxesFontSize',6)
+set(gcf,'DefaultTextFontSize',6)
+set(gcf,'DefaultLineLineWidth',2)
+
+% here we plot the figure and set the title and axes labels
+plot(theta, [betapdf(theta, 1,1); betapdf(theta, 1000,1000)])
+title('prior for \theta')
+xlabel('\theta')
+ylabel('prior probability p(\theta)')
+
+% Finally we set the size of the figure and print it as a postscript
+%set(gcf,'pos',[13.6    10   6  6])   % this line sets the figure in size of 6cm x 6cm
+set(gcf,'paperunits',get(gcf,'units')) 
+set(gcf,'paperpos',[0 0 6 6]) % this line sets the borders of the figure in size of 6cm x 6cm
+set(gcf,'papersize',[6 6])
+print -dpdf fig_ex29prior2  % this line prints the figure in the current 
+                        % Matlab working directory with name fig_ex29.eps
+
+
+% The posterior figure
+figure(2)
+set(gcf,'units','centimeters');
+set(gcf,'DefaultAxesFontSize',6)
+set(gcf,'DefaultTextFontSize',6)
+set(gcf,'DefaultLineLineWidth',2)
+
+plot(theta, [betapdf(theta,1+650,1+350); betapdf(theta,1000+650, 1000+350)])
+title('posteriors for \theta using two different priors')
+xlabel('\theta')
+ylabel('prior probability p(\theta)')
+%l1 = legend('prior', 'posterior');
+
+set(gcf,'paperunits',get(gcf,'units')) 
+set(gcf,'paperpos',[0 0 6 6]) % this line sets the borders of the figure in size of 6cm x 6cm
+set(gcf,'papersize',[6 6])
+
+%set(l1,'Position', [0.4 0.74 0.07 0.1])  % this line sets the legend on right position
+print -dpdf fig_ex29posterior2          % this line prints the figure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% The posterior figure
+figure(2)
+set(gcf,'units','centimeters');
+set(gcf,'DefaultAxesFontSize',6)
+set(gcf,'DefaultTextFontSize',6)
+set(gcf,'DefaultLineLineWidth',2)
+
+plot(theta, [betapdf(theta,100,100) ; betapdf(theta, 100+1000-511,100+511)])
+title('prior and posterior for \theta')
+xlabel('\theta')
+ylabel('prior probability p(\theta)')
+l1 = legend('prior', 'posterior');
+
+set(gcf,'paperunits',get(gcf,'units')) 
+set(gcf,'paperpos',[0 0 6 6]) % this line sets the borders of the figure in size of 6cm x 6cm
+set(gcf,'papersize',[6 6])
+
+set(l1,'Position', [.7 0.8 0.1 0.01])  % this line sets the legend on right position
+print -dpdf fig_ex29posterior3          % this line prints the figure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+figure(1)
+set(gcf,'units','centimeters');
+set(gcf,'DefaultAxesFontSize',6)
+set(gcf,'DefaultTextFontSize',6)
+set(gcf,'DefaultLineLineWidth',1)
+
+% here we plot the figure and set the title and axes labels
+plot(theta, [betapdf(theta, 1,1); betapdf(theta, 1000,1000)])
+title('prior for \theta')
+xlabel('\theta')
+ylabel('prior probability p(\theta)')
+
+% Finally we set the size of the figure and print it as a postscript
+%set(gcf,'pos',[13.6    10   6  6])   % this line sets the figure in size of 6cm x 6cm
+set(gcf,'paperunits',get(gcf,'units')) 
+set(gcf,'paperpos',[0 0 6 6]) % this line sets the borders of the figure in size of 6cm x 6cm
+set(gcf,'papersize',[6 6])
+print -dpdf fig_ex29prior3  % this line prints the figure in the current 
+                        % Matlab working directory with name fig_ex29.eps
+
+
+% The posterior figure
+figure(2)
+set(gcf,'units','centimeters');
+set(gcf,'DefaultAxesFontSize',6)
+set(gcf,'DefaultTextFontSize',6)
+set(gcf,'DefaultLineLineWidth',1)
+
+plot(theta, [betapdf(theta,1+1000-511,1+511); betapdf(theta,1000+1000-511, 1000+511)])
+title('posteriors for \theta using two different priors')
+xlabel('\theta')
+ylabel('prior probability p(\theta)')
+%l1 = legend('prior', 'posterior');
+
+set(gcf,'paperunits',get(gcf,'units')) 
+set(gcf,'paperpos',[0 0 6 6]) % this line sets the borders of the figure in size of 6cm x 6cm
+set(gcf,'papersize',[6 6])
+
+%set(l1,'Position', [0.4 0.74 0.07 0.1])  % this line sets the legend on right position
+print -dpdf fig_ex29posterior3          % this line prints the figure
+

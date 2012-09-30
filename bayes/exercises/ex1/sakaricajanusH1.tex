@@ -1,0 +1,204 @@
+\documentclass[a4paper]{article}
+\usepackage[english]{babel}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[pdftex]{graphicx}
+\usepackage{color}
+\usepackage[pdftex,colorlinks=true,citecolor=black,
+            pagecolor=black,linkcolor=black,menucolor=black,
+            urlcolor=black]{hyperref}
+\usepackage{eufrak}
+\usepackage{amsmath}
+\usepackage{amsbsy}
+\usepackage{eucal}
+\usepackage{subfigure}
+\usepackage{longtable}
+\usepackage{url}
+\urlstyle{same}
+
+\usepackage{natbib}
+
+\pdfinfo{            
+          /Title      (BECS-114.2601 Bayesian Modeling)
+          /Author     ()
+          /Keywords   ()          
+}
+
+
+\title{BECS-114.2601 Bayesian Modeling - Exercise set 1 (exercises 2.9 and 2.17)}
+\author{Sakari Cajanus \\ 
+       {\it sakari.cajanus@aalto.fi}}
+
+
+\begin{document}
+%--- KANSILEHTI -------------------------------------------------------------
+\maketitle
+
+
+\newpage
+%------------------------------------------------------------------------------
+
+\section*{Exercise 2.9}
+The model used in the exercise 2.9. was Binomial observation model using
+Beta-prior. The Binomial likelihood is given by
+\begin{align*}
+    p(y | n, \theta)= {n\choose k}\theta^y(1-\theta)^{n-y}.
+\end{align*}
+
+We were asked to determine the prior Beta-distribution
+parameters $\alpha$ and $\beta$, given the mean and standard deviation of the
+distribution. This can be done simply by solving the equations that give mean
+and standard deviation (or variance), given the parameters
+\begin{align*}
+    \mu &= \frac{\alpha}{\alpha+\beta}\!  \\
+    \sigma^2 &= \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}\!
+\end{align*}
+which gives the following equations:
+\begin{align*}
+\alpha &= \frac{(1-\mu)\mu^2}{\sigma^2}-\mu\\
+\beta &= \alpha(\frac{1}{\mu}-1)
+\end{align*}
+Using parameter values determined by mean 0.6 and standard deviation of 0.3
+($\alpha=1,\;\beta=\frac{2}{3}$) we get a prior distribution shown in figure
+\ref{fig:prior}.
+\begin{figure}[ht]
+  \begin{center}
+      \includegraphics[]{fig_ex29prior}
+    \caption{Prior distribution Beta(1,2/3)}\label{fig:prior}   
+ \end{center}
+\end{figure}
+If we then take a random sample of 1000 Californians, of which 65 \% support
+the death penalty, using the Beta-distribution prior for Binomial observation
+model we can get the the posterior (Beta) distribution for the parameter
+$\theta$ easily, as the Beta-distribution is a natural conjugate prior for the
+Binomial model. The updating rules for for the parameters are
+\begin{align*}
+    \alpha &= \alpha_0 + y = 1 + 650 = 651\\
+    \beta &= \beta_0 + n -y, = \frac{2}{3} +1000 -650 = 350\frac{2}{3}
+\end{align*}
+where $n$ is our total number of observations (1000) and $y$ is the frequency
+of the death penalty supporters in our sample (650). Thus the resulting
+posterior (shown in figure \ref{fig:post1}) is quite peaked at around
+$\theta=0.65$ as our data swamps the prior as can be seen from the parameter
+update equations.
+\begin{figure}[ht]
+  \begin{center}
+      \includegraphics[]{fig_ex29posterior}
+    \caption{Prior and posterior using the Beta(1,2/3) prior.}\label{fig:post1}   
+ \end{center}
+\end{figure}
+Testing the effect of the prior was done using an uniform or non-informative
+prior (Beta(1,1)), as well as highly informative prior assuming that the
+expected value of $\theta$ is 0.5, which was Beta(1000,1000). The priors and
+their effect on the posteriors are shown in figure \ref{fig:priors2}.
+\begin{figure}[ht]
+  \begin{center}
+    \subfigure[Exercise 2.9 prior]{
+      \label{fig_prior2}
+      \includegraphics[]{fig_ex29prior2}
+    }
+    ~
+    \subfigure[Exercise 2.9 posterior]{
+      \label{fig_posterior2}
+      \includegraphics[]{fig_ex29posterior2}
+    }
+    \caption{    %Here you can add the caption text for the figure.
+      In figures \ref{fig_prior2} and \ref{fig_posterior2}, the effect of
+non-informative prior vs. highly informative prior with mean=0.5 is
+shown.}\label{fig:priors2}   
+ \end{center}
+\end{figure}
+\clearpage
+\section*{Exercise 2.17}
+(a) In the first part of the exercise, we were asked to show that the
+given Beta(100,100) distribution, the probability of parameter $\theta$
+following this distribution being between values of 0.4 and 0.6 is greater
+than 95 \%. We were also asked to show that given those assumptions we are
+ambivalent as to whether the value is greater or less than 0.5. These can be
+easily shown using the CDF for the Beta distribution:
+\begin{align*}
+    \mathrm{CDF} &=
+\int_x^y\frac{x^{\alpha-1}(1-x)^{\beta-1}}{\mathrm{B}(\alpha,\beta)}\\
+p(0.4<\theta<0.6) &= 
+\int_{0.4}^{0.6}\frac{x^{\alpha-1}(1-x)^{\beta-1}}{\mathrm{B}(\alpha,\beta)}\approx0.9957\\
+p(0\leq\theta<0.5) &= 
+\int_{0}^{0.5}\frac{x^{\alpha-1}(1-x)^{\beta-1}}{\mathrm{B}(\alpha,\beta)}=0.5\\
+&= p(0.5<\theta\leq1).
+\end{align*}
+The Beta function $\mathrm{B}(\alpha,\beta)$ is the normalization constant
+and $\alpha=\beta=100$.
+
+(b) Also in this exercise we assume similar likelihood model as we used in
+the prior exercise 2.9. Thus the posterior distribution can be obtained using
+similar equations,
+\begin{align*}
+    \alpha &= \alpha_0 + y = 100 + 1000 - 511 = 589\\
+    \beta &= \beta_0 + n -y, = 100 + 511 = 611
+\end{align*}
+The prior and posterior distributions are shown in figure \ref{fig:post3}.
+The posterior probability for $\theta>0.5$ can be calculated from the
+posterior (beta(589,611)) distribution
+\begin{align*}
+p(0.5<\theta<1) &= 
+\int_{0.5}^{1}\frac{x^{\alpha-1}(1-x)^{\beta-1}}{\mathrm{B}(\alpha,\beta)}\bigg|_{\alpha=589,\beta=611}
+\approx0.26\\
+\end{align*}
+
+\begin{figure}[ht]
+  \begin{center}
+      \includegraphics[]{fig_ex29posterior3}
+    \caption{Prior and posterior using the Beta(1,2/3) prior.}\label{fig:post3}   
+ \end{center}
+\end{figure}
+
+We
+were also asked to non-informative and highly informative priors, for which
+the priors and posteriors are shown in figure \ref{fig:priors3}. The
+non-informative prior was Beta(1,1) and the highly informative was
+beta(1000,1000). As can be seen, using the highly informative prior results
+in posterior distribution with mean closer to the prior mean value of 0.5,
+while the posterior mean using the non-informative prior is closer to the
+ratio calculated from the data (0.489).
+
+\begin{figure}[ht]
+  \begin{center}
+    \subfigure[Exercise 2.17 priors]{
+      \label{fig_prior3}
+      \includegraphics[]{fig_ex29prior3}
+    }
+    ~
+    \subfigure[Exercise 2.17 posteriors]{
+      \label{fig_posterior3}
+      \includegraphics[]{fig_ex29posterior3}
+    }
+    \caption{    %Here you can add the caption text for the figure.
+      In figures \ref{fig_prior3} and \ref{fig_posterior3}, the effect of
+non-informative prior vs. highly informative prior with mean=0.5 is
+shown.}\label{fig:priors3}   
+ \end{center}
+\end{figure}
+%\begin{figure}
+%  \begin{center}
+%    \subfigure[Exercise 2.9 prior]{
+%      \label{fig_prior}
+%      \includegraphics[]{fig_ex29prior}
+%    }
+%    ~
+%    \subfigure[Exercise 2.9 posterior]{
+%      \label{fig_posterior}
+%      \includegraphics[]{fig_ex29posterior}
+%    }
+%    \caption{    %Here you can add the caption text for the figure.
+%      In figures \ref{fig_prior} and \ref{fig_posterior}, the prior and posterior 
+%      distributions for exercise 2.9. are presented.}\label{fig_example}   
+% \end{center}
+%\end{figure}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
