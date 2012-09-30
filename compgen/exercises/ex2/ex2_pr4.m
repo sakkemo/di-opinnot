@@ -1,8 +1,6 @@
 function [score alignment] = ex2_pr4(seqA, seqB, scm, penalty)
 %EX2_PR4 Summary of this function goes here
 %   Detailed explanation goes here
-fprintf('%s\n',seqA)
-fprintf('%s\n',seqB)
 s1 = aa2int(seqA);
 s2 = aa2int(seqB);
 lengthA = length(seqA);
