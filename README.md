@@ -1,66 +1,66 @@
 LUKKARI
 =======
 
-<table border=1>?
-  <tbody>?
-    <!-- Results table headers -->?
-    <tr>?
-      <th></th>?
-      <th>MA</th>?
-      <th>TI</th>?
-      <th>KE</th>?
-      <th>TO</th>?
-      <th>PE</th>?
-    </tr>?
-    <tr>?
-      <td>8-10</td>?
-      <td></td>?
-      <td>Modeling<br />Biological<br />Networks H</td>?
-      <td></td>?
-      <td></td>?
-      <td></td>?
-    </tr>?
-    <tr>?
-      <td>10-12</td>?
-      <td>Materiaali L</td>?
-      <td></td>?
-      <td>Comp.<br />Systems<br />Biology</td>?
-      <td></td>?
-      <td>Modeling<br />Biological<br />Networks L</td>?
-    </tr>?
-    <tr>?
-      <td>12-14</td>?
-      <td>Bayes L</td>?
-      <td>Comp.<br />Systems<br />Biology</td>?
-      <td>Complex<br />Networks L</td>?
-      <td>Modeling<br />Biological<br />Networks H</td>?
-      <td></td>?
-    </tr>?
-    <tr>?
-      <td>14-16</td>?
-      <td></td>?
-      <td>Modeling<br />Biological<br />Networks L</td>?
-      <td>Ele I L</td>?
-      <td></td>?
-      <td></td>?
-    </tr>?
-    <tr>?
-      <td>16-18</td>?
-      <td></td>?
-      <td></td>?
-      <td></td>?
-      <td></td>?
-      <td></td>?
-    </tr>?
-    <tr>?
-      <td>18-20</td>?
-      <td></td>?
-      <td></td>?
-      <td></td>?
-      <td></td>?
-      <td></td>?
-    </tr>?
-  </tbody>?
+<table border=1>
+  <tbody>
+    <!-- Results table headers -->
+    <tr>
+      <th></th>
+      <th>MA</th>
+      <th>TI</th>
+      <th>KE</th>
+      <th>TO</th>
+      <th>PE</th>
+    </tr>
+    <tr>
+      <td>8-10</td>
+      <td></td>
+      <td>Modeling<br />Biological<br />Networks H</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>10-12</td>
+      <td>Materiaali L</td>
+      <td></td>
+      <td>Comp.<br />Systems<br />Biology</td>
+      <td></td>
+      <td>Modeling<br />Biological<br />Networks L</td>
+    </tr>
+    <tr>
+      <td>12-14</td>
+      <td>Bayes L</td>
+      <td>Comp.<br />Systems<br />Biology</td>
+      <td>Complex<br />Networks L</td>
+      <td>Modeling<br />Biological<br />Networks H</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>14-16</td>
+      <td></td>
+      <td>Modeling<br />Biological<br />Networks L</td>
+      <td>Ele I L</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>16-18</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>18-20</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
 </table>
 
 AIKATAULU
