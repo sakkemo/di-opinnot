@@ -15,7 +15,7 @@ LUKKARI
     <tr>
       <td>8-10</td>
       <td></td>
-      <td>Modeling<br />Biological<br />Networks H</td>
+      <td><a href="https://noppa.aalto.fi/noppa/kurssi/t-61.5110/etusivu">Modeling<br />Biological<br />Networks H</a></td>
       <td></td>
       <td></td>
       <td></td>
@@ -26,20 +26,20 @@ LUKKARI
       <td></td>
       <td>Comp.<br />Systems<br />Biology</td>
       <td></td>
-      <td>Modeling<br />Biological<br />Networks L</td>
+      <td><a href="https://noppa.aalto.fi/noppa/kurssi/t-61.5110/etusivu">Modeling<br />Biological<br />Networks L</a></td>
     </tr>
     <tr>
       <td>12-14</td>
       <td>Bayes L</td>
       <td>Comp.<br />Systems<br />Biology</td>
       <td>Complex<br />Networks L</td>
-      <td>Modeling<br />Biological<br />Networks H</td>
+      <td><a href="https://noppa.aalto.fi/noppa/kurssi/t-61.5110/etusivu">Modeling<br />Biological<br />Networks H</a></td>
       <td></td>
     </tr>
     <tr>
       <td>14-16</td>
       <td></td>
-      <td>Modeling<br />Biological<br />Networks L</td>
+      <td><a href="https://noppa.aalto.fi/noppa/kurssi/t-61.5110/etusivu">Modeling<br />Biological<br />Networks L</a></td>
       <td><a href="https://noppa.aalto.fi/noppa/kurssi/s-87.1010/etusivu">Ele I L</a></td>
       <td></td>
       <td></td>
