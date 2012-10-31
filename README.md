@@ -40,7 +40,7 @@ LUKKARI
       <td>14-16</td>
       <td></td>
       <td>Modeling<br />Biological<br />Networks L</td>
-      <td>Ele I L</td>
+      <td>[Ele I L](https://noppa.aalto.fi/noppa/kurssi/s-87.1010/etusivu)</td>
       <td></td>
       <td></td>
     </tr>
