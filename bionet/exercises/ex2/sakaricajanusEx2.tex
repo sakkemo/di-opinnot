@@ -1,0 +1,114 @@
+\documentclass[a4paper]{article}
+\usepackage[english]{babel}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[pdftex]{graphicx}
+\usepackage{color}
+\usepackage[pdftex,colorlinks=true,citecolor=black,
+            pagecolor=black,linkcolor=black,menucolor=black,
+            urlcolor=black]{hyperref}
+\usepackage{eufrak}
+\usepackage{amsmath}
+\usepackage{amsbsy}
+\usepackage{eucal}
+\usepackage{subfigure}
+\usepackage{longtable}
+\usepackage{url}
+\urlstyle{same}
+
+\usepackage{natbib}
+
+\pdfinfo{
+          /Title      (T-61.5110 Modeling Biological Networks)
+          /Author     ()
+          /Keywords   ()
+}
+
+
+\title{T-61.5110 Modeling Biological Networks - Exercise set 2}
+\author{Sakari Cajanus \\
+       {\it sakari.cajanus@aalto.fi}}
+
+
+\begin{document}
+%--- KANSILEHTI -------------------------------------------------------------
+\maketitle
+
+
+\newpage
+%------------------------------------------------------------------------------
+
+\section*{Exercise 1}
+a) Done.\\
+b) Yeast graph:\\
+\begin{figure}[ht!]
+  \begin{center}
+      \includegraphics[width=0.85\textwidth]{Rplots.pdf}
+    \caption{Yeast graph}\label{fig:post}
+ \end{center}
+\end{figure}
+
+c) In the following figure \ref{fig_example}, the degree distributions for the yeast graph, and two random networks (Bernoulli and power law) are shown. The randomized networks are based on the yeast graph, i.e. they have the same number of nodes and edges. Based on these figure it's clear that the yeast graph contains few very highly connected nodes, similarly to a power law network.
+\begin{figure}
+  \begin{center}
+    \subfigure[Degree distribution for yeast network]{
+      \label{fig_prior}
+      \includegraphics[width=0.5\textwidth]{1c1}
+    }
+    ~
+    \subfigure[Degree distribution for Bernoulli random network]{
+      \label{fig_prior2}
+      \includegraphics[width=0.5\textwidth]{1c2}
+    }
+    ~
+    \subfigure[Degree distribution for power law random network]{
+      \label{fig_likelihood}
+      \includegraphics[width=0.5\textwidth]{1c3}
+    }
+    \caption{Degree distributions}\label{fig_example}
+ \end{center}
+\end{figure}
+
+\section*{Exercise 2}
+a) not found!\\
+b) Figure titles contain the numbers:
+\begin{figure}[ht!]
+  \begin{center}
+    \subfigure[First type of motifs found]{
+      \label{fig_prior}
+      \includegraphics[width=0.5\textwidth]{2b1}
+    }
+    ~
+    \subfigure[Second type of motifs found]{
+      \label{fig_likelihood}
+      \includegraphics[width=0.5\textwidth]{2b2}
+    }
+    \caption{Motifs of size k=3 found in yeast network.}\label{fig_example}
+ \end{center}
+\end{figure}\\
+\newpage
+c) It is very clear that the first type of motif as shown before is very over-expressed when compared to a Bernoulli network.
+\begin{figure}[ht!]
+  \begin{center}
+      \includegraphics[width=0.85\textwidth]{2c.pdf}
+    \caption{Motif counts}\label{fig:post}
+ \end{center}
+\end{figure}\\
+d) It is probable that some of the power-law networks of the same size exhibit the same number of motif of type one as the yeast network.
+\begin{figure}[ht!]
+  \begin{center}
+      \includegraphics[width=0.85\textwidth]{2d.pdf}
+    \caption{Motif counts}\label{fig:post2}
+ \end{center}
+\end{figure}\\
+e)
+
+\section*{Exercise 3}
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
