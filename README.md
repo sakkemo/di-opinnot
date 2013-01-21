@@ -80,7 +80,11 @@ Syksy 2012
 
 Kevät 2013
 ----------
-* T-61.5010 Information Visualization (III)				5 op
+* T-61.5050 High-throughput bioinformatics				5 op	KEVÄT
+* T-61.3015 Digitaalinen Signaalinkäsittely ja suodatus			5 op	KEVÄT
+* S-113.1327 Fysiikka III							6 op	KEVÄT
+* T-61.5140 Machine Learning: Advanced Probabilistic Methods P		5 op	KEVÄT III
+* T-61.5010 Information Visualization					5 op	KEVÄT I
 
 
 
