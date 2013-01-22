@@ -1,21 +1,5 @@
 LUENNOT
 =======
-<style type="text/css">
-table.tableizer-table {
-        border: 1px solid #CCC; font-family: Arial, Helvetica, sans-serif;
-        font-size: 12px;
-} 
-.tableizer-table td {
-        padding: 4px;
-        margin: 3px;
-        border: 1px solid #ccc;
-}
-.tableizer-table th {
-        background-color: #104E8B; 
-        color: #FFF;
-        font-weight: bold;
-}
-</style>
 
 <table class="tableizer-table">
 <tr class="tableizer-firstrow"><th></th><th>MA</th><th>TI</th><th>KE</th><th>TO</th><th>PE</th></tr>
