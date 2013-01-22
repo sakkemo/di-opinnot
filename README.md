@@ -20,8 +20,7 @@ table.tableizer-table {
 <table class="tableizer-table">
 <tr class="tableizer-firstrow"><th></th><th>MA</th><th>TI</th><th>KE</th><th>TO</th><th>PE</th></tr>
  <tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- <tr><td>10</td><td>DSP [T2]</td><td>HTB [T6]</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- <tr><td>FYIII [S4]</td><td>&nbsp;</td><td>INF [Di]</td><td>ML [T6]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td>10</td><td>DSP [T2]</td><td>HTB [T6]/FYIII [S4]</td><td>&nbsp;</td><td>INF [Di]</td><td>ML [T6]</td></tr>
  <tr><td>12</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Bay [F1] 13-</td><td>&nbsp;</td></tr>
  <tr><td>14</td><td>FYIII [S4]</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
  <tr><td>16</td><td>INF [T1]</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td></td></tr></table>
