@@ -1,67 +1,31 @@
-LUKKARI
+LUENNOT
 =======
+<style type="text/css">
+table.tableizer-table {
+        border: 1px solid #CCC; font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+} 
+.tableizer-table td {
+        padding: 4px;
+        margin: 3px;
+        border: 1px solid #ccc;
+}
+.tableizer-table th {
+        background-color: #104E8B; 
+        color: #FFF;
+        font-weight: bold;
+}
+</style>
 
-<table border=1>
-  <tbody>
-    <!-- Results table headers -->
-    <tr>
-      <th></th>
-      <th>MA</th>
-      <th>TI</th>
-      <th>KE</th>
-      <th>TO</th>
-      <th>PE</th>
-    </tr>
-    <tr>
-      <td>8-10</td>
-      <td></td>
-      <td><a href="https://noppa.aalto.fi/noppa/kurssi/t-61.5110/etusivu">Modeling<br />Biological<br />Networks H</a></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>10-12</td>
-      <td>Materiaali L</td>
-      <td></td>
-      <td>Comp.<br />Systems<br />Biology</td>
-      <td></td>
-      <td><a href="https://noppa.aalto.fi/noppa/kurssi/t-61.5110/etusivu">Modeling<br />Biological<br />Networks L</a></td>
-    </tr>
-    <tr>
-      <td>12-14</td>
-      <td>Bayes L</td>
-      <td>Comp.<br />Systems<br />Biology</td>
-      <td>Complex<br />Networks L</td>
-      <td><a href="https://noppa.aalto.fi/noppa/kurssi/t-61.5110/etusivu">Modeling<br />Biological<br />Networks H</a></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>14-16</td>
-      <td></td>
-      <td><a href="https://noppa.aalto.fi/noppa/kurssi/t-61.5110/etusivu">Modeling<br />Biological<br />Networks L</a></td>
-      <td><a href="https://noppa.aalto.fi/noppa/kurssi/s-87.1010/etusivu">Ele I L</a></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>16-18</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>18-20</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+<table class="tableizer-table">
+<tr class="tableizer-firstrow"><th></th><th>MA</th><th>TI</th><th>KE</th><th>TO</th><th>PE</th></tr>
+ <tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td>10</td><td>DSP [T2]</td><td>HTB [T6]</td></tr>
+ <tr><td>FYIII [S4]</td><td>&nbsp;</td><td>INF [Di]</td><td>ML [T6]</td></tr>
+ <tr><td>12</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Bay [F1] 13-</td><td>&nbsp;</td></tr>
+ <tr><td>14</td><td>FYIII [S4]</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td>16</td><td>INF [T1]</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td></td></tr></table>
+
 
 AIKATAULU
 =========
@@ -72,9 +36,8 @@ Syksy 2012
 * T-61.5020 Computational genomics					5 op	SYKSY I
 * T-61.5110 Modeling Biological Networks P (II)				5 op	SYKSY II
 * AS-0.3301 C++ Programming						4 op	SYKSY
-* S-113.2110 Materiaalitieteen perusteet					5 op	SYKSY
+* S-113.2110 Materiaalitieteen perusteet				5 op	SYKSY
 * S-114.2601 Bayesilaisen mallintamisen perusteet L			5 op	SYKSY
-* T-61.5130 Machine Learning and Neural Networks P (II)			5 op	SYKSY II
 * S-87.1010 Elektroniikka I						5 op	SYKSY
 
 
@@ -82,7 +45,8 @@ Kevät 2013
 ----------
 * T-61.5050 High-throughput bioinformatics				5 op	KEVÄT
 * T-61.3015 Digitaalinen Signaalinkäsittely ja suodatus			5 op	KEVÄT
-* S-113.1327 Fysiikka III							6 op	KEVÄT
+* S-113.1327 Fysiikka III						6 op	KEVÄT
+* S-114.4610 Special Course in Bayesian Modelling                       5 op    KEVÄT
 * T-61.5140 Machine Learning: Advanced Probabilistic Methods P		5 op	KEVÄT III
 * T-61.5010 Information Visualization					5 op	KEVÄT I
 
@@ -105,14 +69,14 @@ Sivuaine jatkomoduuli B2		20 op
 ---------------------------------------------
 * AS-0.3301 C++ Programming						4 op	SYKSY
 * T-61.3015 Digitaalinen Signaalinkäsittely ja suodatus			5 op	KEVÄT
-* S-113.1327 Fysiikka III							6 op	KEVÄT
-* S-113.2110 Materiaalitieteen perusteet					5 op	SYKSY
+* S-113.1327 Fysiikka III						6 op	KEVÄT
+* S-113.2110 Materiaalitieteen perusteet				5 op	SYKSY
 
 Erikoismoduuli C			20 op
 ---------------------------------------------
 * S-114.4202 Laskennallisen tieteen erikoiskurssi II L			5 op	KÄYTY
 * S-114.2601 Bayesilaisen mallintamisen perusteet L			5 op	SYKSY
-* T-61.5130 Machine Learning and Neural Networks P (II)			5 op	SYKSY II
+* S-114.4610 Special Course in Bayesian Modelling                       5 op    KEVÄT
 * T-61.5140 Machine Learning: Advanced Probabilistic Methods P		5 op	KEVÄT III
 
 
