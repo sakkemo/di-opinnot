@@ -28,6 +28,7 @@
 
 \usepackage{amsmath, amssymb} % 
 \usepackage{fancyhdr} % Required for custom headers
+\usepackage{enumerate}
 \usepackage{lastpage} % Required to determine the last page for the footer
 \usepackage{extramarks} % Required for headers and footers
 \usepackage[usenames,dvipsnames]{color} % Required for custom colors
@@ -80,7 +81,7 @@
         tabsize=4, % 5 spaces per tab
         %
         % Put standard Perl functions not included in the default language here
-        morekeywords={spectrogram},
+        morekeywords={spectrogram, myGenDTMF, soundsc, printsetup, printfig},
         %
         % Put Perl function parameters here
         morekeywords=[2]{on, off, interp},
@@ -270,6 +271,45 @@ Kuvassa \ref{121_spektri2} esitetään spektrogrammi suodatuksen jälkeen. Kuvas
 \end{figure}
 \perlscript{123}{Tehtävän 123 Matlab-koodi}
 \perlscript{myGenDTMF}{MyGenDTMF-funktio}
+\end{homeworkProblem}
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%	PROBLEM 4
+%----------------------------------------------------------------------------------------
+
+\begin{homeworkProblem}[Tehtävä 215 (WaveSurfer)]
+    \begin{enumerate}[(a)]
+        \item \textit{Alma oli se, johon hän oli ollut onnettomasti rakastunut, ja oli vieläkin.} En voinut kuunnella pätkää WaveSurferilla, mutta kuuntelin MATLABilla. (Could not gain access to /dev/sound/dsp for writing, Ubuntu 12.10)
+        \item Pituus sampleina: 78520. Sekunteina: $4.907$.
+        \item \textit{Power Plot} näkymä näyttää ikkunoittain lasketun tehon signaalista: Hiljaisina hetkinä teho on pieni, esimerkkipätkässä $<8 \mathrm{dB}$.
+        \item /s/ Näkyy spektrogrammissa korkeilla taajuuksilla (4000-8000 Hz) olevana, muita äänteitä satunnaisempana alueena.
+        \item Kuten edellä jo mainittiin, on /s/ satunnaista värähtelyä korkeilla taajuuksilla. Sille ei voi määrittää ominaista taajuutta.
+    \end{enumerate}
+\end{homeworkProblem}
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%	PROBLEM 5
+%----------------------------------------------------------------------------------------
+
+\begin{homeworkProblem}[Tehtävä 216 (Audacity)]
+    Biisi: Clutch: The Devil \& Me
+    \begin{enumerate}[1.]
+        \item Efekti 1: Takaperin: signaali kuuluu lopusta alkuun. Kuten vanhoissa rokkibiiseissä, musiikissa kuuluu saatanan puhetta väärinpäin kuunneltuna.
+        \item Efekti 2: Muuta sävelkorkeutta (-8 puolisävelaskelta). Efekti muutti sävelkorkeutta vaikuttamatta toiston nopeuteen. Biisi kuulosti matalammalta soitetulta ja laulajan ääni hassun möreältä, mutta toistonopeus oli sama.
+        \item Efekti 3: Phaser: Yhdistää eri vaiheessa olevaa signaalia alkuperäisen kanssa. Musiikin taustalla vaikuttaa kuuluvan häiriöääntä, joka kuuluu välillä selvemmin ja ja välillä vähemmän. Osassa musiikista efekti kuuluu selvemmin, ja toisinaan ei juuri lainkaan.
+    \end{enumerate}
+\end{homeworkProblem}
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%	PROBLEM 6
+%----------------------------------------------------------------------------------------
+
+\begin{homeworkProblem}[Tehtävä 217 (Octave)]
+    (Asenna Octave)
 \end{homeworkProblem}
 
 %----------------------------------------------------------------------------------------
