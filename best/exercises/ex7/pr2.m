@@ -233,4 +233,8 @@
         legend('True derivative','Estimated derivative');
         xlabel('Time step')
         
+        
+       err2
+       sqrt(sum((X-ms).^2,2)/numel(X))
+   
   

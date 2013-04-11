@@ -30,7 +30,7 @@ figure(2); plot(x,s, x,m,'-', x,y,'.k')
 
 ms = m;
 Ps = [zeros(1,N-1), P(N)];
-plot(x,s,x,ms,'-',x,y,'.k')
+figure(3); hold off; plot(x,s,x,ms,'-')
 hold on;
 
 % Smoothing:
@@ -40,7 +40,7 @@ for k = N-1:-1:1
     ms(k) = m(k) + P(k)/P_*(ms(k+1)-m_);
     Ps(k) = P(k) + (P(k)/P_)^2*(Ps(k+1)-P_);
     %plot(x,s,x(k:k+1),ms(k:k+1),'r')
-    hold off; plot(x,s,x,ms,x,y,'.k')
+    hold off; plot(x,s,x,ms)
     pause(10/N)
 end
 MSE1 = sum((m-s).^2)
@@ -57,7 +57,7 @@ MSE2 = sum((ms-s).^2)
 
 md = m;
 Pd = [zeros(1,N-1), P(N)];
-n = 2000;
+n = 1000;
 a = min(y)-3;
 b = max(y)+3;
 t = linspace(a,b,n);
@@ -75,34 +75,31 @@ for k = N-1:-1:1
     md(k) = t*p';
     Pd(k) = (t-md(k)).^2*p';
 end
-plot(x,s,x,ms,'-',x,md,'--r')
+figure(4); plot(x,s,x,ms,'-',x,md,'--r')
+%% c) 
+% Filtering:
+m = [0 zeros(1, N-1)];
+Pstat = P(N);
+%K = zeros(1, N);
+H = 1;
+A = 1;
 
-
-md = zeros(1,n);
-Pd = zeros(1,n);
-m = mso(end);
-P = Pso(end);
-mss(end) = m;
-Pss(end) = P;
-p_ = normpdf(t,m,P);
-size(p_)
-distr = zeros(N,n);
-for k=n-1:-1:1
-% dynamical distribution times the previous smoothing distribution per
-% the predictive distribution (derived analytically in this linear
-% gaussian case)
-p = sum(p_dyn.*repmat(p_',1,N)./repmat(normpdf(t,mso(k),sqrt(Pso(k)+q))',1,N));
-% times the filtering distribution
-p = p.*normpdf(t,mso(k),sqrt(Pso(k)));
-p = p/sum(p);
-p_ = p;
-distr(:,k) = p';
-m = t*p';
-mss(k) = m;
-Pss(k) = (t-m).^2*p';
+for k = 2:N
+    % Prediction:
+    m_ = A*m(k-1);
+    P_ = A*Pstat*A' + q; % = P(k-1) + q
+    % Update
+    S = H*P_*H' + r; % = P(k-1) + q + r
+    K = P_*H'/S; % = (P(k-q) + q)/(P(k-1) + q + r)
+    m(k) = m_ + K*(y(k) -H*m_); % = (1-K)*m + K*y(k)
 end
-rts_discr_m = mss;
-rts_discr_P = Pss;
+mstat = m;
 
-
-%% c)
+% Smoothing:
+for k = N-1:-1:1
+    m_ = m(k);
+    P_ = Pstat + q;
+    mstat(k) = m(k) + Pstat/P_*(mstat(k+1)-m_);
+    %plot(x,s,x(k:k+1),ms(k:k+1),'r')
+end
+figure(5); plot(x,s,x,ms,'-',x,mstat,'--r', 'Linewidth',1)
