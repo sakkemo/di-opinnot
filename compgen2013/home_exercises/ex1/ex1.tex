@@ -1,0 +1,380 @@
+\documentclass{article}
+% Change "article" to "report" to get rid of page number on title page
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{booktabs}
+\usepackage{enumerate}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab,
+        frame=single,
+        basicstyle=\small\ttfamily,
+        keywordstyle=[1]\color{Blue}\bf,
+        keywordstyle=[2]\color{Purple},
+        keywordstyle=[3]\color{Blue}\underbar,
+        identifierstyle=,
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+        stringstyle=\color{Purple},
+        showstringspaces=false,
+        tabsize=5,
+        % Put standard MATLAB functions not included in the default
+        % language here
+        morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf,
+        getgenbank,basecount,dimercount,seqshoworfs,cpgisland,fieldnames,getfield,
+        codoncount,nt2int},
+        % Put MATLAB function parameters here
+        morekeywords=[2]{on, off, interp},
+        % Put user defined functions here
+        morekeywords=[3]{FindESS},
+        morecomment=[l][\color{Blue}]{...},
+        numbers=left,
+        firstnumber=1,
+        numberstyle=\tiny\color{Blue},
+        stepnumber=5
+        }
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+
+% Homework Specific Information
+\newcommand{\hmwkTitle}{Exercise 1}
+\newcommand{\hmwkSubTitle}{T-61.5120}
+\newcommand{\hmwkDueDate}{September 16, 2012}
+\newcommand{\hmwkClass}{Computational Genomics}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Juho Rousu}
+\newcommand{\hmwkAuthorName}{Sakari Cajanus}
+
+% Setup the header and footer
+\pagestyle{fancy}                                                       %
+\lhead{\hmwkAuthorName}                                                 %
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}  %
+\rhead{\firstxmark}                                                     %
+\lfoot{\lastxmark}                                                      %
+\cfoot{}                                                                %
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}}                  %
+\renewcommand\headrulewidth{0.4pt}                                      %
+\renewcommand\footrulewidth{0.4pt}                                      %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make title
+\title{\vspace{2in}\textmd{\textbf{\hmwkClass:\ \hmwkTitle\ifthenelse{\equal{\hmwkSubTitle}{}}{}{\\\large\hmwkSubTitle}}}\\\normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\\vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}\vspace{3in}}
+\date{}
+\author{\textbf{\hmwkAuthorName}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% This is used to trace down (pin point) problems
+% in latexing a document:
+%\tracingall
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some tools
+
+% Use these to play with the headers and footers
+\newcommand{\enterProblemHeader}[1]{\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak%
+                                    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak}%
+\newcommand{\exitProblemHeader}[1]{\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak%
+                                   \nobreak\extramarks{#1}{}\nobreak}%
+
+\setcounter{secnumdepth}{0}
+\newcommand{\homeworkProblem}[3]
+ {\enterProblemHeader{#1}
+   \ifthenelse{\equal{#2}{}}%
+        {\subsection{#1}}%
+        {\subsection{#1 (#2)}}%
+               #3
+   \exitProblemHeader{#1}}
+
+%%% I think \captionwidth (commented out below) can go away
+%%%
+%% Edits the caption width
+%\newcommand{\captionwidth}[1]{%
+%  \dimen0=\columnwidth   \advance\dimen0 by-#1\relax
+%  \divide\dimen0 by2
+%  \advance\leftskip by\dimen0
+%  \advance\rightskip by\dimen0
+%}
+
+% Includes a figure
+% The first parameter is the label, which is also the name of the figure
+%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
+%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
+%   This means that if a DVI (or PS) is being produced, it will look for
+%   an eps. If a PDF is being produced, it will look for nearly anything
+%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
+%   I typically generate an eps and a png to allow me the most flexibility
+%   when rendering my document.
+% The second parameter is the width of the figure normalized to column width
+%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
+% The third parameter is the caption.
+\newcommand{\scalefig}[3]{
+  \begin{figure}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{#1}
+  \end{figure}}
+
+% Includes a MATLAB script.
+% The first parameter is the label, which also is the name of the script
+%   without the .m.
+% The second parameter is the optional caption.
+\newcommand{\matlabscript}[2]
+  {\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1]{#1.m}\end{itemize}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% The main document content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{spacing}{1.1}
+\maketitle
+% Uncomment the \tableofcontents line to get a Contents on front page
+%\tableofcontents
+\newpage
+
+\homeworkProblem{Problem 1}{}%
+ { % Start homework solution
+
+ \begin{enumerate}[(a)]
+\item The
+\begin{align}
+\textrm{GC-content}=
+\cfrac{G+C}{A+T+G+C}\times\ 100 \%,
+\end{align}
+was 49.1 \%.
+\item Figure~\ref{fig:awesome_image}
+    \begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{1b}
+\caption{GC-skew}
+\label{fig:awesome_image}
+\end{figure}
+\item Base frequencies
+%
+\begin{table}[h!]
+\caption{Base frequencies\vspace{2pt}}
+\centering
+\begin{tabular}{llr}
+\toprule
+base (upper strand) & base (lower strand) & frequecny \\
+\hline
+A & T & 14 \\
+C & G & 16 \\
+G & C & 12 \\
+T & A & 15 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\item Dinucleotide frequencies
+%
+\begin{table}[h!]
+\caption{Dinucleotide frequencies\vspace{2pt}}
+\centering
+\begin{tabular}{lr}
+\toprule
+Dinucleotide (upper strand) & frequency \\
+\hline
+    AA & 3\\
+    AC & 4\\
+    AG & 5\\
+    AT & 3\\
+    CA & 7\\
+    CC & 0\\
+    CG & 1\\
+    CT & 4\\
+    GA & 5\\
+    GC & 2\\
+    GG & 6\\
+    GT & 3\\
+    TA & 0\\
+    TC & 6\\
+    TG & 3\\
+    TT & 4\\
+\bottomrule
+\end{tabular}
+\end{table}
+\item Trinucleotide frequencies
+\begin{table}[h!]
+\caption{Trinucleotide frequencies\vspace{2pt}}
+\centering
+\begin{tabular}{lr}
+\toprule
+Trinucleotide (upper strand) & frequency \\
+\hline
+ AAA    & 1\\
+ AAC    & 2\\
+ ACA    & 3\\
+ ACT    & 1\\
+ AGA    & 1\\
+ AGG    & 2\\
+ AGT    & 2\\
+ ATC    & 2\\
+ ATT    & 1\\
+ CAA    & 2\\
+ CAC    & 1\\
+ CAG    & 1\\
+ CAT    & 3\\
+ CGC    & 1\\
+ CTC    & 1\\
+ CTG    & 2\\
+ CTT    & 1\\
+ GAC    & 1\\
+ GAG    & 4\\
+ GCA    & 1\\
+ GCT    & 1\\
+ GGA    & 3\\
+ GGG    & 2\\
+ GGT    & 1\\
+ GTC    & 1\\
+ GTT    & 1\\
+ TCA    & 3\\
+ TCG    & 1\\
+ TCT    & 2\\
+ TGA    & 1\\
+ TGC    & 1\\
+ TGG    & 1\\
+ TTC    & 2\\
+ TTG    & 1\\
+ TTT    & 1\\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{enumerate}
+ } % End homework solution
+\clearpage
+\homeworkProblem{Problem 2}{Codon Adaptation Index}{
+    log-odd CAIs were:
+\begin{enumerate}[(a)]
+    \item $-0.4678$
+    \item $-0.2713$
+\end{enumerate}
+The latter is more likely from a highly expressed gene.
+}
+\newpage
+\homeworkProblem{Problem 3}{1st Order Markov Model}{
+Given the frequencies and transition probabilities, the log-probabilities under the first order Markov chain model were
+\begin{enumerate}[(a)]
+    \item $-43.9689$
+    \item $-43.0756$
+\end{enumerate}
+and given only the base frequencies
+\begin{enumerate}[(a)]
+    \item $-43.2978$
+    \item $-42.7827$
+\end{enumerate}
+The sequence (b) was more likely to originate from the first order Markov chain model.
+}
+\newpage
+\homeworkProblem{Problem 4}{Over- and under-represented k-mers}{
+\begin{table}[ht]
+\caption{K-mers\vspace{2pt}}
+\centering
+\begin{tabular}{lrrrl}
+\toprule
+k-mer & frequency & probability & odds ratio & over-presented? \\
+\hline
+ C      &  0.3   &   0.2450     &  1.2245    &  X\\
+ AAA    &  0.01  &   0.0140     &  0.7144    &   \\
+ CGCG   &  0.001 &   0.0045     &  0.2235    &    \\
+ TACG   &  0.005 &   0.0039     &  1.2871    &  X  \\
+ GGG    &  0.01  &   0.0203     &  0.4915    &   \\
+ TATATA &  0.001 &   0.0002     &  5.1038    &   X \\
+    
+    
+    
+    
+    
+      
+\bottomrule
+\end{tabular}
+\end{table}
+}
+\homeworkProblem{Problem 5}{Over- and under-represented k-mers}{
+    \begin{enumerate}[(a)]
+        \item 3 similarities:
+            \begin{itemize}
+                \item Free access/data publicly available
+                \item All allow searching/alignment with BLAST
+                \item All have APIs for software/batch retrieval of data
+            \end{itemize}
+        \item 3 differences:
+            \begin{itemize}
+                \item Different data sources
+                \item Focusing on different things: genome data/all molecular data/proteins, respectively
+                \item Different financial backers (at least partly)
+            \end{itemize}
+        \item Searching for GFP:
+            \begin{itemize}
+                \item Genbank gives genetic sequences; EMBL sequences as well as molecules of various sizes, gene expression, pathways...; uniprot has protein structure and amino acid sequences
+                \item Most results: EMBL, least results: uniprot. EMBL has various information sources and does not focus on only genetic sequences or proteins.
+                \item GFP has been studied extensively, and made synthetically
+                \item Some results are the same or have the same access numbers etc.
+            \end{itemize}
+        \item Green fluorescent protein is originally from jellyfish. It has been used as noninvasive fluorescent marker extensively.
+    \end{enumerate}
+}
+\appendix
+\section{Code}
+\matlabscript{ex1}{}
+\end{spacing}
+
+%\begin{thebibliography}{9}
+%\bibitem{hc}
+   %NCBI Map Viewer: Homo Sapiens(human),
+   %\emph{Chromosome 22}.\\
+   %http://www.ncbi.nlm.nih.gov/projects/mapview/maps.cgi?taxid=9607\&chr=22\\
+   %retrieved Sept. 18 2012.
+
+%\end{thebibliography}
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
