@@ -1,5 +1,6 @@
 \documentclass{article}
 % Change "article" to "report" to get rid of page number on title page
+\usepackage{fontenc}
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{setspace}
 \usepackage{fancyhdr}
@@ -14,6 +15,7 @@
 \usepackage{courier}
 \usepackage{booktabs}
 \usepackage{enumerate}
+\usepackage{textcomp}
 
 \definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
 
@@ -30,6 +32,7 @@
         stringstyle=\color{Purple},
         showstringspaces=false,
         tabsize=5,
+        upquote=true,
         % Put standard MATLAB functions not included in the default
         % language here
         morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf,
