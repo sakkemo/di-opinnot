@@ -1,0 +1,398 @@
+\documentclass{article}
+% Change "article" to "report" to get rid of page number on title page
+\usepackage{fontenc}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{booktabs}
+\usepackage{enumerate}
+\usepackage{textcomp}
+\usepackage{hyperref}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab,
+        frame=single,
+        basicstyle=\small\ttfamily,
+        keywordstyle=[1]\color{Blue}\bf,
+        keywordstyle=[2]\color{Purple},
+        keywordstyle=[3]\color{Blue}\underbar,
+        identifierstyle=,
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+        stringstyle=\color{Purple},
+        showstringspaces=false,
+        tabsize=5,
+        upquote=true,
+        % Put standard MATLAB functions not included in the default
+        % language here
+        morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf,
+        getgenbank,basecount,dimercount,seqshoworfs,cpgisland,fieldnames,getfield,
+        codoncount,nt2int},
+        % Put MATLAB function parameters here
+        morekeywords=[2]{on, off, interp},
+        % Put user defined functions here
+        morekeywords=[3]{FindESS},
+        morecomment=[l][\color{Blue}]{...},
+        numbers=left,
+        firstnumber=1,
+        numberstyle=\tiny\color{Blue},
+        stepnumber=5
+        }
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+
+% Homework Specific Information
+\newcommand{\hmwkTitle}{Exercise 1}
+\newcommand{\hmwkSubTitle}{T-61.5120}
+\newcommand{\hmwkDueDate}{September 29, 2012}
+\newcommand{\hmwkClass}{Computational Genomics}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Juho Rousu}
+\newcommand{\hmwkAuthorName}{Sakari Cajanus}
+
+% Setup the header and footer
+\pagestyle{fancy}                                                       %
+\lhead{\hmwkAuthorName}                                                 %
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}  %
+\rhead{\firstxmark}                                                     %
+\lfoot{\lastxmark}                                                      %
+\cfoot{}                                                                %
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}}                  %
+\renewcommand\headrulewidth{0.4pt}                                      %
+\renewcommand\footrulewidth{0.4pt}                                      %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make title
+\title{\vspace{2in}\textmd{\textbf{\hmwkClass:\ \hmwkTitle\ifthenelse{\equal{\hmwkSubTitle}{}}{}{\\\large\hmwkSubTitle}}}\\\normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\\vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}\vspace{3in}}
+\date{}
+\author{\textbf{\hmwkAuthorName}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% This is used to trace down (pin point) problems
+% in latexing a document:
+%\tracingall
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some tools
+
+% Use these to play with the headers and footers
+\newcommand{\enterProblemHeader}[1]{\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak%
+                                    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak}%
+\newcommand{\exitProblemHeader}[1]{\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak%
+                                   \nobreak\extramarks{#1}{}\nobreak}%
+
+\setcounter{secnumdepth}{0}
+\newcommand{\homeworkProblem}[3]
+ {\enterProblemHeader{#1}
+   \ifthenelse{\equal{#2}{}}%
+        {\subsection{#1}}%
+        {\subsection{#1 (#2)}}%
+               #3
+   \exitProblemHeader{#1}}
+
+%%% I think \captionwidth (commented out below) can go away
+%%%
+%% Edits the caption width
+%\newcommand{\captionwidth}[1]{%
+%  \dimen0=\columnwidth   \advance\dimen0 by-#1\relax
+%  \divide\dimen0 by2
+%  \advance\leftskip by\dimen0
+%  \advance\rightskip by\dimen0
+%}
+
+% Includes a figure
+% The first parameter is the label, which is also the name of the figure
+%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
+%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
+%   This means that if a DVI (or PS) is being produced, it will look for
+%   an eps. If a PDF is being produced, it will look for nearly anything
+%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
+%   I typically generate an eps and a png to allow me the most flexibility
+%   when rendering my document.
+% The second parameter is the width of the figure normalized to column width
+%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
+% The third parameter is the caption.
+\newcommand{\scalefig}[3]{
+  \begin{figure}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{#1}
+  \end{figure}}
+
+% Includes a MATLAB script.
+% The first parameter is the label, which also is the name of the script
+%   without the .m.
+% The second parameter is the optional caption.
+\newcommand{\matlabscript}[2]
+  {\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1]{#1.m}\end{itemize}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% The main document content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{spacing}{1.1}
+\maketitle
+% Uncomment the \tableofcontents line to get a Contents on front page
+%\tableofcontents
+\newpage
+
+\homeworkProblem{Problem 1}{}%
+{ % Start homework solution
+  \begin{enumerate}[(a)]
+    \item Dynamic programming matrix:
+      \[
+      \begin{array}{l|ccccccccc}
+        &  & A & G & T & C & T & A & C & G \\
+        \hline
+        &  0 & -1 & -2 & -3 & -4 & -5 & -6 & -7 & -8\\ 
+       G & -1 & -1 & 0 & -1 & -2 & -3 & -4 & -5 & -6 \\
+       G & -2 & -2 & 0 & -1 & -2 & -3 & -4 & -5 & -6 \\
+       T & -3 & -3 & -1 & +1 & 0 & -1 & -2 & -3 & -4 \\
+       G & -4 & -4 & -2 & 0 & 0 & -1 & -2 & -3 & -4 \\
+       C & -5 & -5 & -3 & -1 & +1 & 0 & -1 & -1 & -2 \\
+       T & -6 & -6 & -4 & -2 & 0 & +2 & +1 & 0 & -1 \\
+       C & -7 & -7 & -5 & -3 & -1 & +1 & +1 & +2 & +1 \\
+       G & -8 & -8 & -6 & -4 & -2 & 0 & 0 & +1 & +3 \\
+      \end{array}
+    \]
+
+  \item Trace-back path:
+      \[
+      \begin{array}{l|ccccccccc}
+        &  & A & G & T & C & T & A & C & G \\
+        \hline
+        &   &  &  &  &  &  &  &  & \\ 
+       G &  & \searrow &  &  &  &  &  &  &  \\
+       G &  &  & \searrow  &  &  &  &  &  &  \\
+       T &  &  &  & \searrow &  &  &  &  &  \\
+       G &  &  &  & \downarrow &  &  &  &  &  \\
+       C &  &  &  &  & \searrow  &  &  &  &  \\
+       T &  &  &  &  &  & \searrow & \rightarrow &  &  \\
+       C &  &  &  &  &  &  &  & \searrow &  \\
+       G &  &  &  &  &  &  &  &  & \searrow \\
+      \end{array}
+    \]
+  \item Alignment between sequences:\\
+    {\tt AGT-CTACG\\
+    ||| || ||\\
+  GGTGCT-CG\\}
+  \end{enumerate}
+}
+\homeworkProblem{Problem 2}{}%
+ {
+   \begin{enumerate}[(a)]
+     \item{\tt
+         TCGT:\\
+score = 4.1597\\
+align =\\
+TCG\\
+|||\\
+TCG\\
+\\
+ATGT:\\
+score = 1.6639\\
+align =\\
+ATG\\
+| |\\
+ACG\\
+\\
+TCGA:\\
+score = 4.1597\\
+align =\\
+TCG\\
+|||\\
+TCG}\\
+ \item The default substitution matrix \textsc{NUC44} has substitution scores of $+1$ for Cs or Ts to Ys. Making the substitution to the reference we get the following:\\
+   {\tt
+     TCGT:\\
+score = 3.3278\\
+align =\\
+TCGT\\
+|:|:\\
+TYGY\\
+\\
+ATGT:\\
+score = 3.3278\\
+align =\\
+ATGT\\
+|:|:\\
+AYGY\\
+\\
+TCGA:\\
+score = 3.3278\\
+align =\\
+TCGA\\
+::||\\
+YYGA\\
+   }
+ \item
+   {\tt
+     TCGT:\\
+score = 5.5463\\
+align =\\
+TTGT\\
+||||\\
+TTGT\\
+\\
+ATGT:\\
+score = 5.5463\\
+align =\\
+ATGT\\
+||||\\
+ATGT\\
+\\
+TCGA:\\
+score = 5.5463\\
+align =\\
+TTGA\\
+||||\\
+TTGA\\
+   }
+   \end{enumerate}
+   The first option finds three nucleotide matches for second and last short read, and gives a high score for those. For the second read, only a match of two nucleotides can be found.
+
+   The second options with the wildcard finds matches with the same score for the sequences. Good matches are found, provided the right substitutions have happened in the short reads.
+
+   The third option finds matches with the highest score, as all nucleotides match. Substituting both Ts and Cs with the same letter makes finding the match easier.
+ }
+ \homeworkProblem{Problem 3}{}%
+ {
+   Optimal alignment paths:
+      \[
+      \begin{array}{l|cccccc}
+        &  & A & A & C & G & T \\
+        \hline
+        \\
+        A & & \searrow \\
+        A & & &  \searrow \\
+        C & & & \downarrow & \searrow \\
+        G & & & \downarrow & \downarrow & \searrow \\
+        C & & & & \searrow\downarrow & \downarrow \\
+        G & & & & & \searrow\downarrow \\
+        T & & & & & & \searrow 
+      \end{array}
+    \]
+    and alignments:\\
+    {\tt
+      AA--CGT\\
+      || \ |||\\
+      AACGCGT\\
+\\
+      AAC--GT\\
+      ||| \ ||\\
+      AACGCGT\\
+\\
+      AACG--T\\
+      |||| \ |\\
+      AACGCGT\\
+ }
+ }
+ \homeworkProblem{Problem 4}{}%
+ {
+   \begin{enumerate}[(a)]
+     \item The significance level is lower than $0.01 \%$ (i.e. corresponding score (29 or more) would arise in only $0.01\%$ of tests due to chance).
+     \item Using only the values given in the table, we can calculate
+       \begin{align}
+         1-.9999^{1000}=0.09516\dots \approx 9.51\%
+       \end{align}
+   \end{enumerate}
+
+ }
+ \homeworkProblem{Problem 5}{}%
+  {
+    \begin{enumerate}[(a)]
+      \item From \url{http://www.ncbi.nlm.nih.gov/BLAST/blast_program.shtml}
+        \begin{enumerate}[1.]
+          \item Protein blast
+            compares an amino acid query sequence against a protein sequence database
+          \item Nucleotide blast
+            compares a nucleotide query sequence against a nucleotide sequence database
+          \item blastx
+            compares a nucleotide query sequence translated in all reading frames against a protein sequence database
+          \item tblastn
+            compares a protein query sequence against a nucleotide sequence database dynamically translated in all reading frames
+          \item tblastx
+            compares the six-frame translations of a nucleotide query sequence against the six-frame translations of a nucleotide sequence database. Please note that tblastx program cannot be used with the nr database on the BLAST Web page. 
+        \end{enumerate}
+      \item 
+        \begin{enumerate}[1.]
+          \item VecScreen: Finds segment of nucleic acid sequence that may be of vector origin. It searches the query sequence for segments that match UniVec database. \textsc{BLAST} parameters are preset for optimal detection of vector contamination. Finding sequences of vector origin is important to rule out contaminated sequences before submitting them to databases or doing further analysis.
+          \item PubChem BioAssay Protein BLAST: searches the BioAssay database that contains biologically active small molecules and their bioactivity results.
+          \item Find conserved domains: Searches Conserved Domain Database with protein or nucleotide query sequences. Conserved domains are recurring units in molecular evolution.
+        \end{enumerate}
+      \item
+        \begin{enumerate}[i.]
+          \item E-value: Corrected p-value taking into account query and total database sequence lengths.
+          \item Bit score $S'$: Normalized version of alignment score: Expected $2^{S'}$ aligments need to be examined to find a bit score of $S'$ by chance.
+          \item Identities: The extent to which two sequences have the same residues at the same positions
+          \item Query coverage: Percent of the query lengths that is included in the aligned segments.
+          \item Total score: Sum of alignment scores of all segments from the same database sequence that match the query sequence (calculated over all segments).
+          \item Max score: Highest alignment score (bit score) between the query sequence and the database sequence segment
+        \end{enumerate}
+    \end{enumerate}
+  }
+\appendix
+\section{Code}
+\matlabscript{ex3}{}
+\end{spacing}
+
+%\begin{thebibliography}{9}
+%\bibitem{hc}
+   %NCBI Map Viewer: Homo Sapiens(human),
+   %\emph{Chromosome 22}.\\
+   %http://www.ncbi.nlm.nih.gov/projects/mapview/maps.cgi?taxid=9607\&chr=22\\
+   %retrieved Sept. 18 2012.
+
+%\end{thebibliography}
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
