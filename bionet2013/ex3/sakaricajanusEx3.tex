@@ -1,0 +1,127 @@
+\documentclass[a4paper]{article}
+\usepackage[english]{babel}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[pdftex]{graphicx}
+\usepackage{color}
+\usepackage[pdftex,colorlinks=true,citecolor=black,
+            pagecolor=black,linkcolor=black,menucolor=black,
+            urlcolor=black]{hyperref}
+\usepackage{eufrak}
+\usepackage{amsmath}
+\usepackage{amsbsy}
+\usepackage{eucal}
+\usepackage{subfigure}
+\usepackage{longtable}
+\usepackage{url}
+\usepackage{enumerate}
+\urlstyle{same}
+
+\usepackage{natbib}
+
+\pdfinfo{
+          /Title      (T-61.5110 Modeling Biological Networks)
+          /Author     ()
+          /Keywords   ()
+}
+
+
+\title{T-61.5110 Modeling Biological Networks - Problem set 3}
+\author{Sakari Cajanus\\ 82036R \\
+       {\it sakari.cajanus@aalto.fi}}
+
+
+\begin{document}
+%--- KANSILEHTI -------------------------------------------------------------
+\maketitle
+
+
+\newpage
+%------------------------------------------------------------------------------
+
+\section*{Problem 1}
+\begin{enumerate}[a.]
+    \item Definitions
+        \begin{enumerate}[i.]
+\item A stochastic process is a collection of random variables for a system that can evolve
+randomly (as opposed to deterministic process, where we always know what the next
+state is).
+\item Markov Process: For discrete time
+\begin{align}
+P(X_n|X_{n-1},X_{n-2},...X_{0}) = P(X_{n}|X_{n-1})
+\end{align}
+
+and for continuous time (Durrett, Essentials of Stochastic Processes):
+\begin{align}
+P(X_{t+s}= j|X_{s}= i,X_{s_n}= in,...,X_{s_o}= i_0) = P(X_{t}= j|X_{0}= i)
+\end{align}
+\item Markov chain is time homogeneous if the transition matrix $P$ is constant (same
+after each step), and thus the transition matrix of n transitions is $P^n$. In other words
+$P^n=P$.
+\item The transition matrix gives the probabilities of moving from i to j such that
+$P(i|j) = P_{i,j}. P{i,jis}$ the value in the i'th row and j'th column of the transition matrix
+$P$.
+\item A stationary distribution p is distribution for which $\pi P = \pi$.
+        \end{enumerate}
+\item For discrete time
+\begin{align}
+P(X_n|X_{n-1},X_{n-2},...X_{0}) = P(X_{n}|X_{n-1})
+\end{align}
+
+and for continuous time (Durrett, Essentials of Stochastic Processes):
+\begin{align}
+P(X_{t+s}= j|X_{s}= i,X_{s_n}= in,...,X_{s_o}= i_0) = P(X_{t}= j|X_{0}= i)
+\end{align}
+For discrete time, the Markov property is true for each time step, for
+continuous time processes it is true for all increments in time $s$.
+
+
+For discrete time, we have Markov chain with transition matrix $p_{i,j}$, if
+\begin{align}
+P(X_{n+1}= j| X_{n}= i,X_{n-1}= i_{n-1},...,X_{0}= i0) = p_{i,j.}
+\end{align}
+The transition matrix contains the transition probabilities between the states.
+For continuous time, we have Markow chain with probabilities
+\begin{align}
+P(X_{t+s}= j| X(t) = i) = q_{i,j}s + o(s),\;i\neq j
+\end{align}
+where the $q_{i,j}s$ form the transition rate matrix Q. The transition rate (or
+intensity) matrix contains the the rates (per unit time) of departing from one
+state and arriving at another.
+\end{enumerate}
+\clearpage
+\section*{Problem 2}
+I simulated a Markov chain of length 1000, with initial distribution of
+$\pi = (\begin{smallmatrix} 0.5 & 0.5\end{smallmatrix})$ and transition matrix  $P = \bigl(\begin{smallmatrix} 0.9 &
+0.1 \\ 0.2 & 0.8\end{smallmatrix}\bigr)$.
+In this case, the stationary distribution (where the chain would converge after run-
+ning for infinite time) would be $\pi = (\begin{smallmatrix} 2/3 & 1/3 \end{smallmatrix})$. For the thousand steps, the ratio of
+the time spent in the states was $\pi = (\begin{smallmatrix}  0.644 & 0.356 \end{smallmatrix})$, so the chain is quite close to the
+stationary distribution after it has run for 1000 steps. The plot of the path
+shows how the states switch or stay the same: more time is spent in state 1.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{disc.pdf}
+\end{figure}
+\clearpage
+\section*{Problem 3}
+I simulated a Markov chain of length 20 time units, with initial distribution of
+$\pi = (\begin{smallmatrix} 1 & 0\end{smallmatrix})$ and transition rate matrix 
+$Q = \bigl(\begin{smallmatrix} -0.5 & 0.5 \\ 1 & -1\end{smallmatrix}\bigr)$.
+
+Here, again, the Markov chain favours state 1 and spends more time there (which
+is apparent from the transition rate matrix as well: The rate of transition
+from state 1 to state 2 is
+smaller).
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{cont.pdf}
+\end{figure}
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
