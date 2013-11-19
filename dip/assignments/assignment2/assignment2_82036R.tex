@@ -1,0 +1,380 @@
+\documentclass{article}
+% Change "article" to "report" to get rid of page number on title page
+\usepackage{fontenc}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{booktabs}
+\usepackage{enumerate}
+\usepackage{textcomp}
+\usepackage{hyperref}
+\usepackage{caption,subcaption}
+\usepackage{enumerate}
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab,
+        frame=single,
+        basicstyle=\small\ttfamily,
+        keywordstyle=[1]\color{Blue},
+        %keywordstyle=[1]\color{Blue}\bf,
+        keywordstyle=[2]\color{Purple},
+        keywordstyle=[3]\color{Blue}\underbar,
+        identifierstyle=,
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+        stringstyle=\color{Purple},
+        showstringspaces=false,
+        tabsize=5,
+        upquote=true,
+        % Put standard MATLAB functions not included in the default
+        % language here
+        morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf,
+        getgenbank,basecount,dimercount,seqshoworfs,cpgisland,fieldnames,getfield,
+        codoncount,nt2int,meansqr,double,imread,imshow,ceil,noise,medfilt2,
+        fspecial,imwrite},
+        % Put MATLAB function parameters here
+        morekeywords=[2]{on, off, interp},
+        % Put user defined functions here
+        morekeywords=[3]{FindESS},
+        morecomment=[l][\color{Blue}]{...},
+        numbers=left,
+        firstnumber=1,
+        numberstyle=\tiny\color{Blue},
+        stepnumber=5
+        }
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+
+% Homework Specific Information
+\newcommand{\hmwkTitle}{Assignment 2}
+\newcommand{\hmwkSubTitle}{T-61.5100}
+\newcommand{\hmwkDueDate}{November 19, 2013}
+\newcommand{\hmwkClass}{Digital Image Processing P}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{}
+\newcommand{\hmwkAuthorName}{Sakari Cajanus, 82036R}
+
+% Setup the header and footer
+\pagestyle{fancy}                                                       %
+\lhead{\hmwkAuthorName}                                                 %
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}  %
+\rhead{\firstxmark}                                                     %
+\lfoot{\lastxmark}                                                      %
+\cfoot{}                                                                %
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}}                  %
+\renewcommand\headrulewidth{0.4pt}                                      %
+\renewcommand\footrulewidth{0.4pt}                                      %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make title
+\title{\vspace{2in}\textmd{\textbf{\hmwkClass:\ \hmwkTitle\ifthenelse{\equal{\hmwkSubTitle}{}}{}{\\\large\hmwkSubTitle}}}\\\normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\\vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}\vspace{3in}}
+\date{}
+\author{\textbf{\hmwkAuthorName}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% This is used to trace down (pin point) problems
+% in latexing a document:
+%\tracingall
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some tools
+
+% Use these to play with the headers and footers
+\newcommand{\enterProblemHeader}[1]{\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak%
+                                    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak}%
+\newcommand{\exitProblemHeader}[1]{\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak%
+                                   \nobreak\extramarks{#1}{}\nobreak}%
+
+\setcounter{secnumdepth}{0}
+\newcommand{\homeworkProblem}[3]
+ {\enterProblemHeader{#1}
+   \ifthenelse{\equal{#2}{}}%
+        {\subsection{#1}}%
+        {\subsection{#1 (#2)}}%
+               #3
+   \exitProblemHeader{#1}}
+
+%%% I think \captionwidth (commented out below) can go away
+%%%
+%% Edits the caption width
+%\newcommand{\captionwidth}[1]{%
+%  \dimen0=\columnwidth   \advance\dimen0 by-#1\relax
+%  \divide\dimen0 by2
+%  \advance\leftskip by\dimen0
+%  \advance\rightskip by\dimen0
+%}
+
+% Includes a figure
+% The first parameter is the label, which is also the name of the figure
+%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
+%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
+%   This means that if a DVI (or PS) is being produced, it will look for
+%   an eps. If a PDF is being produced, it will look for nearly anything
+%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
+%   I typically generate an eps and a png to allow me the most flexibility
+%   when rendering my document.
+% The second parameter is the width of the figure normalized to column width
+%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
+% The third parameter is the caption.
+\newcommand{\scalefig}[3]{
+  \begin{figure}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{#1}
+  \end{figure}}
+
+% Includes a MATLAB script.
+% The first parameter is the label, which also is the name of the script
+%   without the .m.
+% The second parameter is the optional caption.
+\newcommand{\matlabscript}[2]
+  {\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1]{#1.m}\end{itemize}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% The main document content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{spacing}{1.1}
+\maketitle
+% Uncomment the \tableofcontents line to get a Contents on front page
+%\tableofcontents
+\newpage
+
+\homeworkProblem{}{}%
+{ % Start homework solution
+    In collaboration with Betti Valmari.
+
+    We were supposed to filter sinusoidal noise pattern from the image using
+    two different methods: First, a spatial model (finding a model for the
+    inference pattern) and then by removing frequency domain spikes from FFT of
+    the image. The original and noisy images are shown in figure~\ref{fig:gull}
+    and~\ref{fig:tiger}, respectively.
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{T-61_5100_city_orig_2.png}
+                \caption{city\_orig.png}
+                \label{fig:gull}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{T-61_5100_city_lines}
+                \caption{city\_lines.png}
+                \label{fig:tiger}
+        \end{subfigure}
+        \caption{Original and noisy images.}\label{fig:animals}
+\end{figure}
+
+To start, we were asked to calculate the mean square error before and after the
+operations.
+The mean square error is calculated by taking the difference (signifying
+\emph{error}) in the intensity of each pixel, squaring it and then calculating
+the mean over all the pixels in the quadrant. In general, the formula is
+\begin{align}
+    \operatorname{MSE}=\frac{1}{n}\sum_{i=1}^n(\hat{Y_i} - Y_i)^2,
+\end{align}
+where $\hat{Y}$ are the values measured and $Y$ are the true values. We will
+also show the filtered images as well as the error images (filtered image
+substracted from the original) to visually compare the results.
+
+The MSE values were calculated using intensities normalized between 0 and 1. MSEs
+can be calculated in Matlab either by calculating the differences, squares and
+means by basic operations or using the function {\tt meansqr()}.
+
+\begin{description}
+    \item[Spatial model]
+We did the spatial filtering using a model with four free parameters $A_1$,
+$A_2$, $\delta_1$ and $\delta_2$. The frequency (number of maximums in the
+image) of the sinusoidal interference was merely counted from the image. The
+image was 450 pixels high. The spatial model was thus constructed as follows:
+\begin{align}
+    \mathrm{filter} = A_2 + A_1\sin(x),
+\end{align}
+where
+\begin{align}
+    x = \texttt{linspace(0 + $\delta_1$, $15\times2\pi + \delta_2$)}
+\end{align}
+The parameter choice and meaning and final values are explained in table~\ref{tab:var}.
+\begin{table}[h]
+    \centering
+    \caption{Parameters of the spatial model}
+    \label{tab:var}
+    \begin{tabular}{rlr}
+        \toprule
+        parameter  & value& meaning\\
+        \midrule
+        $A_1$ & 0.0303 & Amplitude of the sinusoidal noise\\
+        $A_2$ & 0.1919& Background noise level \\
+   $\delta_1$ & 0& Start phase (angular value) of the noise \\
+   $\delta_2$ & 6.2929 & End phase of the noise \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The parameters seemed to be sufficient to capture the variability of the
+spatial features of the noise. They were optimized by finding a value that
+minimized MSE for each of the parameters, and then starting the cycle over
+using the optimized values for other parameters until convergence was achieved.
+For more detail, refer to the included source code.
+\item[FFT]
+\end{description}
+
+The filtering using frequency domain was done by calculating the 2-dimensional
+FFT of the image, finding the spikes corresponding to the frequency of the
+interference pattern and removing them by filtering the spikes (only the spikes
+were removed, though we also tested notch filtering). The FFT and the removal
+of the spikes are shown in figures~\ref{fig:fft1} and \ref{fig:fft2}
+respectively. At least when zooming in, you can see the high-contrast spikes in
+the centerline that were removed. The image can be obtained using inverse
+fourier transform.
+
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{fft.png}
+                \caption{FFT of the image.}
+                \label{fig:fft1}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{fft_removed.png}
+                \caption{FFT with the spiked removed}
+                \label{fig:fft2}
+        \end{subfigure}
+        \caption{FFT filtering}\label{fig:animals1}
+\end{figure}
+
+\subsubsection{Results}
+
+The mean squared errors for the original noisy image and the filtering results
+are shown in table~\ref{tab:mse}. The filtering
+results and the error images are shown in figure~\ref{fig:animals3}.
+
+Looking at the MSEs and the visual results, the spatial model works slightly
+better as it removes all of the noisy waves from the image: There's still
+something left in the frequency filtered image. Larger contribution to the
+difference in the MSEs comes probably from the difference in overall brightness
+and contrast in the image, which suffered in both filtering methods.
+
+Overall, I'm proud of the performance of the ad hoc spatial filter and
+parameter optimization implemented here.
+
+\begin{table}[h]
+    \centering
+    \caption{MSEs of the images}
+    \label{tab:mse}
+    \begin{tabular}{rl}
+        \toprule
+        image & MSE\\
+        \midrule
+        noisy &  0.0294\\
+    spatial filter&   0.0103\\
+      frequency filter & 0.0208\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+        \centering
+        \begin{subfigure}[b]{0.3\textwidth}
+                 %\includegraphics[width=\textwidth]{topleft1.png}
+                \caption{median filter}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.3\textwidth}
+                 %\includegraphics[width=\textwidth]{topright1.png}
+                \caption{median filter}
+        \end{subfigure}
+\\
+        \begin{subfigure}[b]{0.3\textwidth}
+                 \includegraphics[width=\textwidth]{spatial_filtered.png}
+                \caption{spatial model}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.3\textwidth}
+                 \includegraphics[width=\textwidth]{spatial_diff.png}
+                \caption{spatial model}
+        \end{subfigure}
+
+        \begin{subfigure}[b]{0.3\textwidth}
+                 \includegraphics[width=\textwidth]{fft_filtered.png}
+                \caption{frequency domain filtering}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.3\textwidth}
+                 \includegraphics[width=\textwidth]{fft_diff.png}
+                \caption{frequency domain filtering}
+        \end{subfigure}
+        \caption{Results of the different filters}\label{fig:animals3}
+\end{figure}
+}
+\appendix
+\section{Code}
+\matlabscript{assignment2}{}
+\end{spacing}
+
+%\begin{thebibliography}{9}
+%\bibitem{hc}
+   %NCBI Map Viewer: Homo Sapiens(human),
+   %\emph{Chromosome 22}.\\
+   %http://www.ncbi.nlm.nih.gov/projects/mapview/maps.cgi?taxid=9607\&chr=22\\
+   %retrieved Sept. 18 2012.
+
+%\end{thebibliography}
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
