@@ -1,0 +1,108 @@
+\documentclass[a4paper]{article}
+\usepackage[english]{babel}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[pdftex]{graphicx}
+\usepackage{color}
+\usepackage[pdftex,colorlinks=true,citecolor=black,
+            pagecolor=black,linkcolor=black,menucolor=black,
+            urlcolor=black]{hyperref}
+\usepackage{eufrak}
+\usepackage{amsmath}
+\usepackage{amsbsy}
+\usepackage{eucal}
+\usepackage{subfigure}
+\usepackage{longtable}
+\usepackage{url}
+\usepackage{enumerate}
+\urlstyle{same}
+
+\usepackage{natbib}
+
+\pdfinfo{
+          /Title      (T-61.5110 Modeling Biological Networks)
+          /Author     ()
+          /Keywords   ()
+}
+
+
+\title{T-61.5110 Modeling Biological Networks - Problem set 5}
+\author{Sakari Cajanus\\ 82036R \\
+       {\it sakari.cajanus@aalto.fi}}
+
+
+\begin{document}
+%--- KANSILEHTI -------------------------------------------------------------
+\maketitle
+
+
+\newpage
+%------------------------------------------------------------------------------
+
+\section*{Problem 1}
+\begin{enumerate}[a.]
+    \item Protein dimerization/dissociation dynamics. is clear that the
+        concentration converges. The change/curve is smooth because the
+        modelling is deterministic. Figure~\ref{fig:dimer}.
+        \begin{figure}[ht!]
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{dimer}
+        \caption{Deterministic dimerization/dissociation dynamics
+        (concentrations of the species).}
+        \label{fig:dimer}
+    \end{center}
+\end{figure}
+\item Stochastic kinetics. You can see that the realizations differ and that
+    there are still changes in the concentration when the average
+    concentrations have converged. Figure~\ref{fig:stoch}.
+\begin{figure}[htp]
+  \centering
+  \subfigure{\label{fig:1}\includegraphics[width=0.4\textwidth]{dimer-stoch1}}
+  \subfigure{\label{fig:2}\includegraphics[width=0.4\textwidth]{dimer-stoch2}}
+  %\\
+  %\subfigure{\label{fig:3}\includegraphics[width=0.4\textwidth]{dimer-stoch3}}
+  %\subfigure{\label{fig:3}\includegraphics[width=0.4\textwidth]{dimer-stoch4}}
+  \caption{Examples of stochastic kinetics for the same process.}\label{fig:stoch}
+\end{figure}
+\item Here are the results of running 100 simulations of the stochastic model
+    for $T=20$. In figure~\ref{fig:sim1} are the concentrations of the dimer
+    for 100 realizations, in figure~\ref{fig:sim2} the mean and confidence
+    intervals of 3 SD and in figure~\ref{fig:sim3} a histogram of number of
+    $P$ molecules at T=20 with red line showing the corresponding
+    concentration in the deterministic model.
+    \begin{figure}[htp]
+  \centering
+
+  \subfigure[Number of $P$ molecules with 100 simulations.]{\label{fig:sim1}\includegraphics[width=0.4\textwidth]{samples}}
+  \subfigure[The mean number of molecules with 100 simulations.]{\label{fig:sim2}\includegraphics[width=0.4\textwidth]{samplemean}}
+  \\
+  \subfigure[Number of molecules at time T=20.]{\label{fig:sim3}\includegraphics[width=0.6\textwidth]{hist}}
+  \caption{The plots for the Problem 1c.}\label{fig:sim}
+  
+\end{figure}
+\end{enumerate}
+\clearpage
+
+\section*{Problem 2}
+In the problem 2, we repeated the simulations in 1c with uncertainty in the
+rate constant $k_2$. In the first simulations, $k$ was 0.2 and in the latter
+$k\sim U(0.1,0.4)$. The mean of this uniform distribution is greater than 0.2,
+which shifts the balance such that the concentration of $P$ is greater. The
+results are shown in figure~\ref{fig:sim-2}.
+\begin{figure}[htp]
+  \centering
+
+  \subfigure[Number of $P$ molecules with 100 simulations.]{\label{fig:sim-2-1}\includegraphics[width=0.4\textwidth]{samples2}}
+  \subfigure[The mean of number of molecules with 100 simulations.]{\label{fig:sim-2-2}\includegraphics[width=0.4\textwidth]{samplemean2}}
+  \\
+  \subfigure[Number of molecules at time T=20.]{\label{fig:sim-2-3}\includegraphics[width=0.6\textwidth]{hist2}}
+  \caption{The plots for the Problem 2.}\label{fig:sim-2}
+  
+\end{figure}
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
