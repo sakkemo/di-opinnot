@@ -218,8 +218,24 @@ end
 %%
 % construct adjacency matrix
 % order: ASH1 CBF1 GAL4 SWI5 GAL80
-threshold=300;
-C = A(:,[1 4 3 2 1]); C(5,:) = 0;
+thresholds = [900 500 400 300 200 100 80 50 20 0.5];
+for i=1:length(thresholds)
+threshold = thresholds(i);
+C = A(:,[1 4 3 2 1]); C(5,:) = 0; C = C>threshold;
+C(1,1)=0;C(2,2)=0;C(3,3)=0;C(4,4)=0;C(5,5)=0;
 names = F.selite;
-bg = biograph(C>threshold, names);
-view(bg)
+bg = biograph(C, names);
+%view(bg)
+
+true_network = ...
+     [0     1     0     0     0;
+     0     0     1     0     0;
+     0     0     0     1     0;
+     1     1     0     0     1;
+     0     0     0     0     0;];
+% view(biograph(true_network, names))
+ 
+ true_positive_ratio = sum(sum((C+true_network) == 2))/sum(true_network(:));
+ false_positive_ratio = sum(sum(C-true_network==1))/sum(true_network(:)==0);
+ Y(i,:) = [threshold, true_positive_ratio, false_positive_ratio];
+end

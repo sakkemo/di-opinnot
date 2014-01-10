@@ -1,0 +1,275 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{epsf,epsfig}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{t1enc} %utf8
+\usepackage{enumerate} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\setlength{\textwidth}{450pt}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\marginparwidth}{0pt}
+\setlength{\topmargin}{0pt}
+\addtolength{\textheight}{120pt}
+\setlength{\leftmargin}{0cm}
+\setlength{\rightmargin}{0cm}
+%\linespread{1.24} %rivivali 1.5
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{2mm}
+\setlength{\voffset}{-1in} 
+%\addtolength{\textheight}{40pt}
+
+\title{T-61.5110 -- Assignment 1}
+\author{Sakari Cajanus (82036R)}
+\date{\today{}}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+%\begin{abstract}
+%Short and simplistic overview of R/BioConductor with basic hands-on
+%exercises. For a full description of R, see www.r-project.org.
+%\end{abstract}
+
+<<fig=FALSE,pdf=true,echo=FALSE>>= 
+library("bnlearn")
+d <- data.frame(
+matrix(c(c(0, 0.076, 0.0419, 0.0207, 0.0225, 0.1033),
+c(10, 0.0186, 0.0365, 0.0122, 0.0175, 0.0462),
+c(20, 0.009, 0.0514, 0.0073, 0.0165, 0.0439),
+c(30, 0.0117, 0.0473, 0.0079, 0.0147, 0.0371),
+c(40, 0.0088, 0.0482, 0.0084, 0.0145, 0.0475),
+c(50, 0.0095, 0.0546, 0.01, 0.0144, 0.0468),
+c(60, 0.0075, 0.0648, 0.0096, 0.0106, 0.0347),
+c(70, 0.007, 0.0552, 0.0107, 0.0119, 0.0247),
+c(80, 0.0081, 0.0497, 0.0113, 0.0104, 0.0269),
+c(90, 0.0057, 0.0352, 0.0116, 0.0142, 0.019),
+c(100, 0.0052, 0.0358, 0.0073, 0.0084, 0.0134),
+c(110, 0.0093, 0.0338, 0.0075, 0.0097, 0.0148),
+c(120, 0.0055, 0.0309, 0.0082, 0.0088, 0.0101),
+c(130, 0.006, 0.0232, 0.0078, 0.0087, 0.0088),
+c(140, 0.0069, 0.0191, 0.0089, 0.0086, 0.008),
+c(150, 0.0093, 0.019, 0.0104, 0.011, 0.009),
+c(160, 0.009, 0.0176, 0.0114, 0.0124, 0.0113),
+c(170, 0.0129, 0.0105, 0.01, 0.0093, 0.0154),
+c(180, 0.0022, 0.0081, 0.0086, 0.0079, 0.003),
+c(190, 0.0018, 0.0072, 0.0078, 0.0103, 0.0012)), ncol=6, byrow=T), row.names=1
+)
+#colnames(d) = c("time", "SWI5", "CBF1", "GAL4", "GAL80", "ASH1")
+colnames(d) = c("SWI5", "CBF1", "GAL4", "GAL80", "ASH1")
+@
+To begin with, I used Bayesian network model with grow-shrink algorithm to
+learn the model. Using the R package {\tt bnlearn}, one can specify $\alpha$,
+target nominal type I error rate, to the learner and thus adjust the parameter
+to include more or less edges into the model.
+
+Assuming somewhat sane values $(0.05 \dots 0.45)$ for the parameter, the graphs
+the training produces don't differ much. Two examples are shown in
+figures 1 and 2.
+\\
+<<pienia,fig=TRUE,include=false>>= 
+bn.gs <- gs(d, alpha=0.05, undirected=F)
+plot(bn.gs)
+@
+\begin{figure}[h!]
+\begin{center}
+\includegraphics{ex5_sakke-pienia}
+\label{myplot1}
+\caption{Network using $\alpha$=0.05}
+\end{center}
+\end{figure}
+<<isoa,fig=TRUE,include=false,echo=TRUE>>= 
+bn.gs <- gs(d, alpha=0.45, undirected=F)
+plot(bn.gs)
+@
+\begin{figure}[h!]
+\begin{center}
+\includegraphics{ex5_sakke-isoa}
+\label{myplot2}
+\caption{Network using $\alpha$=0.45}
+\end{center}
+\end{figure}
+
+False positives and false negatives are shown in figure 3: False
+positives in red and false negatives in green.
+<<fpfn,fig=TRUE,include=false,echo=TRUE>>= 
+bn.gs <- gs(d, alpha=0.05, undirected=F)
+#bn.gs <- set.arc(bn.gs, "SWI5", "CBF1")
+plot(bn.gs, highlight=c("ASH1", "GAL80"), color="red")
+angles <- 90-72*1:5
+coordinates <- data.frame(x=300+250*cos(angles/180*pi), y = 300+250*sin(angles/180*pi))
+lines(coordinates$x[3:4], coordinates$y[3:4], col="green")
+lines(coordinates$x[2:3], coordinates$y[2:3], col="green")
+lines(coordinates$x[c(4,1)], coordinates$y[c(4,1)], col="green")
+@
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics{ex5_sakke-fpfn}
+\label{myplot3}
+\caption{Network showing false negatives (green) and false positives (red).}
+\end{center}
+\end{figure}
+
+The fractions of real interactions and false positives interactions detected
+are shown in Table~\ref{table} below. I didn't take the protein-protein interaction, show
+with dashed line, into account when counting these, i.e. the correct number of
+interactions was assumed to be 6.
+
+<<fig=TRUE,include=false,echo=TRUE>>= 
+Y <- matrix(nrow=5, ncol=3)
+alphaval = c(0.05, 0.40, 0.70, 0.8, 0.95)
+for(i in 1:5){
+    alpha = alphaval[i]
+bn.gs <- gs(d, alpha=alpha, undirected=F)
+true <- matrix(data=c(0,1,0,1,1,   0,0,1,0,0,   1,0,0,0,0,   0,0,0,0,0,  0,1,0,0,0), nrow=5, byrow=T)
+tp <- sum(amat(bn.gs)+true==2)/sum(true)
+fp <- sum(amat(bn.gs)-true==1)/sum(true==0)
+Y[i,] <- c(alpha, tp, fp)
+}
+@
+\begin{table}[h!]
+\begin{center}
+    \caption{True and false positives for different values of $alpha$.}
+    \label{table}
+\begin{tabular}{rrr}
+\toprule
+$\alpha$    & true pos. fraction & false pos. fraction (\$) \\
+\midrule
+0.05 & 0.3333333 & 0.1578947\\
+0.40 & 0.3333333 & 0.2105263\\
+0.70 & 0.3333333 & 0.2105263\\
+0.80 & 0.5000000 & 0.2631579\\
+0.95 & 1.0000000 & 0.7368421\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+I also tested building a boolean network, but didn't test the results at a
+large scale.
+<<fig=TRUE,pdf=false,echo=TRUE>>= 
+d <- data.frame(
+t(matrix(c(c(0, 0.076, 0.0419, 0.0207, 0.0225, 0.1033),
+c(10, 0.0186, 0.0365, 0.0122, 0.0175, 0.0462),
+c(20, 0.009, 0.0514, 0.0073, 0.0165, 0.0439),
+c(30, 0.0117, 0.0473, 0.0079, 0.0147, 0.0371),
+c(40, 0.0088, 0.0482, 0.0084, 0.0145, 0.0475),
+c(50, 0.0095, 0.0546, 0.01, 0.0144, 0.0468),
+c(60, 0.0075, 0.0648, 0.0096, 0.0106, 0.0347),
+c(70, 0.007, 0.0552, 0.0107, 0.0119, 0.0247),
+c(80, 0.0081, 0.0497, 0.0113, 0.0104, 0.0269),
+c(90, 0.0057, 0.0352, 0.0116, 0.0142, 0.019),
+c(100, 0.0052, 0.0358, 0.0073, 0.0084, 0.0134),
+c(110, 0.0093, 0.0338, 0.0075, 0.0097, 0.0148),
+c(120, 0.0055, 0.0309, 0.0082, 0.0088, 0.0101),
+c(130, 0.006, 0.0232, 0.0078, 0.0087, 0.0088),
+c(140, 0.0069, 0.0191, 0.0089, 0.0086, 0.008),
+c(150, 0.0093, 0.019, 0.0104, 0.011, 0.009),
+c(160, 0.009, 0.0176, 0.0114, 0.0124, 0.0113),
+c(170, 0.0129, 0.0105, 0.01, 0.0093, 0.0154),
+c(180, 0.0022, 0.0081, 0.0086, 0.0079, 0.003),
+c(190, 0.0018, 0.0072, 0.0078, 0.0103, 0.0012)), ncol=6, byrow=T)), row.names=c("time", "SWI5", "CBF1", "GAL4", "GAL80", "ASH1")
+)
+d = d[2:6,]
+
+binSeries <- binarizeTimeSeries(d, method="kmeans") 
+
+# Model the data via Probabilitic Boolean Network
+net <- reconstructNetwork(binSeries$binarizedMeasurements,method="bestfit", maxK=3)
+net <- reconstructNetwork(1-binSeries$binarizedMeasurements,method="bestfit", maxK=5)
+
+#print net object and discuss the output
+#print(net)
+
+# plot reconstructed net and discuss
+plotNetworkWiring(net)
+@
+%\section{SOLiD vs. Solexa}
+%SOLiD and Solexa are sequencing methods based on different technologies. SOLiD is technology by Applied Biosystems, that employs sequencing by ligation.  
+
+%Solexa is a sequencing method based on reversible dye-terminators technology and engineered polymerases.
+%\section{SNP calling}
+%SNP calling is finding Single Nucleotide Polymorphisms in NGS data due to genuine sequence level variation.
+%\section{Copy Number Variations vs. Single Nucleotide Polymorphisms}
+%Copy Number Variations are a form of structural variation, meaning the cell has abnormal number of copies of one or more sections of the DNA. SNPs, on the other hand, affect only one base.
+%\begin{enumerate}[a.]
+%\item In the first part of the problem, it was only required the data CEL-files from the given site.
+%\item Here we  read the data to R from the CEL files. I used 9 samples for the healthy and 9 samples for those with tumors.
+%<<fig=FALSE,pdf=false,echo=TRUE>>= 
+%affyset = ReadAffy("N01__normal.CEL",
+%                   "N02__normal.CEL",
+%                   "N03__normal.CEL",
+%                   "N04__normal.CEL",
+%                   "N05__normal.CEL",
+%                   "N06__normal.CEL",
+%                   "N10__normal.CEL",
+%                   "N11__normal.CEL",
+%                   "N13__normal.CEL",
+%                   "T01__tumor.CEL",
+%                   "T02__tumor.CEL",
+%                   "T03__tumor.CEL",
+%                   "T04__tumor.CEL",
+%                   "T05__tumor.CEL",
+%                   "T06__tumor.CEL",
+%                   "T10__tumor.CEL",
+%                   "T11__tumor.CEL",
+%                   "T13__tumor.CEL",
+%                   celfile.path="./cel/")
+%affyset@cdfName <- "HGU95Av2_Hs_ENTREZG"
+%@
+%\item The boxplots for unnormalized expression intensity are shown in the figure below.
+%% c) Plot spot intensity histograms and-or boxplots for each array using raw, unnormalized data. Try also taking logarithm of the data.
+%<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
+%boxplot(affyset)
+%@
+%%The Relative Log Expression (RLE) values are computed by calculating for each probe-set the ratio between the expression of a probe-set and the median expression of this probe-set across all arrays of the experiment. It is assumed that most probe-sets are not changed across the arrays, so it is expected that these ratios are around 0 on a log scale. The boxplots presenting the distribution of these log-ratios should then be centered near 0 and have similar spread. Other behavior would be a sign of low quality. 
+%I also plotted the relative log expression, which are computed by calculating for earch probe-set the ratio between the expression of a probe-set and the median expression of this probe-set acrossa all arrays.
+%<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
+%dataplm = fitPLM(affyset)
+%RLE(dataplm)
+%@
+%
+%% The Normalized Unscaled Standard Error (NUSE) is the individual probe error fitting the Probe-Level Model (the PLM models expression measures using a M-estimator robust regression). The NUSE values are standardized at the probe-set level across the arrays: median values for each probe-set are set to 1. The boxplots allow checking (1) if all distributions are centered near 1 - typically an array with a boxplot centered around 1.1 shows bad quality and (2) if one array has globally higher spread of NUSE distribution than others, which may also be a sign of low quality.
+%% http://arrayanalysis.org/main.html
+%The normalized unscaled standard error is individual probe error fitting of the Probe-Level Model. Boxplots centered around 1.1 or higher spread than the others can be signs of low quality.
+%
+%<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
+%NUSE(dataplm)
+%@
+%\item As for the MA plots, example is shown below:
+%%MA plots for unnormalized data
+%<<fig=TRUE,pdf=true,echo=TRUE>>= 
+%MAplot(affyset)
+%@
+%For pairwise MA plot, you can plot using the mva.pairs function:
+%<<fig=TRUE,pdf=true,echo=TRUE>>= 
+%gn <- sample(geneNames(affyset),100) ##pick only a few genes
+%pms <- pm(affyset[,3:4], gn)
+%mva.pairs(pms)
+%@
+%\item The normalization of the data can be done in many ways. Robust Multi-Array (RMA) means quantile normalization, such that intensities are adjusted to produce identical distributions. GC-RMA also takes into account the probes GC content. MAS 5.0 normalizes each array independently and sequentially.
+%<<fig=FALSE,pdf=false,echo=TRUE>>=
+%affyset.normalized <- gcrma(affyset)
+%@
+%\item The plots that were shown above for the normalized datasets:
+%<<fig=TRUE,pdf=true,echo=TRUE>>= 
+%boxplot(affyset.normalized)
+%MAplot(affyset.normalized)
+%@
+%<<fig=TRUE,pdf=true,echo=TRUE>>= 
+%dataplm = fitPLM(affyset, normalize=T, normalize.method="quantile")
+%RLE(dataplm)
+%@
+%<<fig=TRUE,pdf=true,echo=TRUE>>= 
+%NUSE(dataplm)
+%@
+%\end{enumerate}
+%\section{XLS file returned separately}
+%\section{RMA vs MAS 5.0}
+%RMA assumes multi-chip model, i.e. the probe intensity distributions are the same for each array. MAS 5.0 doesn't make this assumption and normalizes each array independently. In addition, RMA uses log2 units, while MAS 5.0 does not.
+\end{document}
