@@ -1,13 +1,25 @@
 LUENNOT
 =======
 
-<table class="tableizer-table">
-<tr class="tableizer-firstrow"><th></th><th>MA</th><th>TI</th><th>KE</th><th>TO</th><th>PE</th></tr>
- <tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- <tr><td>10</td><td>DSP [T2]</td><td>HTB [T6]/FYIII [S4]</td><td>&nbsp;</td><td>INF [Di]</td><td>ML [T6]</td></tr>
- <tr><td>12</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Bay [F1] 13-</td><td>&nbsp;</td></tr>
- <tr><td>14</td><td>FYIII [S4]</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- <tr><td>16</td><td>INF [T1]</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td></td></tr></table>
+```
+|-------+----+----+------------------+----+----|
+|       | MA | TI | KE               | TO | PE |
+|-------+----+----+------------------+----+----|
+| 8-10  |    |    |                  |    |    |
+|-------+----+----+------------------+----+----|
+| 10-12 |    |    |                  |    |    |
+|-------+----+----+------------------+----+----|
+| 12-14 |    |    |                  |    |    |
+|-------+----+----+------------------+----+----|
+| 14-15 |    |    |                  |    |    |
+|-------+----+----+------------------+----+----|
+| 15-16 |    |    | Filosofia ja     |    |    |
+|-------+----+----+------------------+----+----|
+| 16-17 |    |    | systeemiajattelu |    |    |
+|-------+----+----+------------------+----+----|
+| 17-18 |    |    | systeemiajattelu |    |    |
+|-------+----+----+------------------+----+----|
+```
 
 HARJOITUKSET
 ============
@@ -79,4 +91,49 @@ Tieteen metodiikka			10 op
 
 Diplomityö D				30 op
 ---------------------------------------------
+
+KURSSIT
+=======
+
+MODUULIT
+========
+
+Pääaine syventävä moduuli A3		20 op
+---------------------------------------------
+- [X] T-61.5050 High-throughput bioinformatics                          
+- [X] T-61.5020 Computational genomics                                  
+- [X] T-61.5110 Modeling Biological Networks P                          
+- [ ] Special Course in Bioinformatics I L                              
+
+Sivuaine jatkomoduuli B2		20 op
+---------------------------------------------
+* AS-0.3301 C++ Programming                                         [X]
+* T-61.3015 Digitaalinen Signaalinkäsittely ja suodatus             [ ] 
+* S-129.1031 Kvanttifysiikka                                        [X]
+* S-129.1032 Molekyylien ja kiinteän aineen fysiikka                [X]
+* S-113.2110 Materiaalitieteen perusteet                            [X]
+
+Erikoismoduuli C			20 op
+---------------------------------------------
+* S-114.4202 Laskennallisen tieteen erikoiskurssi II L              [X]
+* S-114.2601 Bayesilaisen mallintamisen perusteet L                 [X]
+* S-114.4610 Special Course in Bayesian Modelling                   [X]
+* Becs-114.4150 Complex Networks L                                  [O]
+
+
+Vapaasti valittavat W			20 op
+---------------------------------------------
+* Kie-98.6052 Saksa 5B                                              [X]
+* T-61.5100 Digital Image Processing                                [O]
+
+Tieteen metodiikka			10 op
+---------------------------------------------
+* T-61.5010 Information Visualization                               [X]
+
+
+Diplomityö D				30 op
+---------------------------------------------
+
+
+
 
