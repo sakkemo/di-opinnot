@@ -8,7 +8,7 @@ Pääaine syventävä moduuli A3		20 op
 - [X] T-61.5110 Modeling Biological Networks P                          
 - [ ] Special Course in Bioinformatics I L                              
 
-Sivuaine jatkomoduuli B2		21 op
+Sivuaine jatkomoduuli B2		20 op
 ---------------------------------------------
 - [X] AS-0.3301 C++ Programming                                    
 - [X] ELEC-C5230 Digitaalisen signaalinkäsittelyn perusteet 
