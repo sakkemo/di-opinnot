@@ -28,11 +28,13 @@ Vapaasti valittavat W			20 op
 ---------------------------------------------
 - [X] Kie-98.6052 Saksa 5B  (2 op)
 - [X] T-61.5100 Digital Image Processing (5 op)
-- [X] Tfy-99.4281 Kuvankäsittely lääketieteellisessä tekniikassa L 
+- [X] Tfy-99.4281 Kuvankäsittely lääketieteellisessä tekniikassa L (5 op)
+- [ ] 8 opintopistettä
 
 Tieteen metodiikka			10 op
 ---------------------------------------------
 - [X] T-61.5010 Information Visualization               
+- [ ] 5 opintopistettä
 
 Diplomityö D				30 op
 ---------------------------------------------
